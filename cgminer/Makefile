@@ -9,24 +9,19 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cgminer
-PKG_VERSION:=20121225
-PKG_REV:=b9c7f3d169942417e04f13fab6e86d944aff37cb
-# this is upstream version 2.10.2
+PKG_VERSION:=20130105
+PKG_MD5SUM:=f165e9060796d07b031aacc9468536f4
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+PKG_SOURCE_URL:=http://ck.kolivas.org/apps/cgminer/
+
 PKG_RELEASE:=1
 PKG_INSTALL:=1
-
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_REV).tar.gz
-PKG_SOURCE_URL:=git://github.com/ckolivas/cgminer.git
-PKG_SOURCE_PROTO:=git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=$(PKG_REV)
 
 PKG_FIXUP:=autoreconf
 
 include $(INCLUDE_DIR)/package.mk
 
 define Package/cgminer
-	MAINTAINER:="Xiangfu Liu" <xiangfu@sharism.cc>
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=cgminer (FPGA Miner)
@@ -40,7 +35,7 @@ monitoring, (over)clocking and fanspeed support for bitcoin and derivative
 coins. Do not use on multiple block chains at the same time!
 endef
 
-CONFIGURE_ARGS += --disable-opencl --disable-adl --enable-icarus --enable-bitforce --without-curses
+CONFIGURE_ARGS += --disable-opencl --disable-adl --enable-avalon --without-curses
 TARGET_LDFLAGS += -Wl,-rpath-link=$(STAGING_DIR)/usr/lib
 
 define Build/Compile
