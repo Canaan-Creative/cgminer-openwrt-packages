@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Disable cgminer. because there is hotplug.d already
+/etc/init.d/cgminer disable
+
+# Setup the cron job
+echo "*/10 *  *   *   *     /usr/bin/cgminer-monitor" | crontab -
+/etc/init.d/cron enable
+/etc/init.d/cron stop
+/etc/init.d/cron start

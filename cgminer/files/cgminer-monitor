@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# This file is for cron job
+if ! pidof cgminer; then
+	/etc/init.d/cgminer start 
+fi
