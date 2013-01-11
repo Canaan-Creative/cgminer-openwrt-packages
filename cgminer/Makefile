@@ -9,13 +9,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cgminer
-PKG_VERSION:=20130105
-PKG_MD5SUM:=f165e9060796d07b031aacc9468536f4
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=http://ck.kolivas.org/apps/cgminer/
-
+PKG_VERSION:=20130108
+PKG_REV:=HEAD
 PKG_RELEASE:=1
 PKG_INSTALL:=1
+
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_REV).tar.gz
+PKG_SOURCE_URL:=http://ck.kolivas.org/apps/cgminer/
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_FIXUP:=autoreconf
 
@@ -35,7 +36,7 @@ monitoring, (over)clocking and fanspeed support for bitcoin and derivative
 coins. Do not use on multiple block chains at the same time!
 endef
 
-CONFIGURE_ARGS += --disable-opencl --disable-adl --enable-avalon --without-curses
+CONFIGURE_ARGS += --disable-opencl --disable-adl --without-curses --enable-avalon
 TARGET_LDFLAGS += -Wl,-rpath-link=$(STAGING_DIR)/usr/lib
 
 define Build/Compile
