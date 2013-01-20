@@ -2,8 +2,8 @@
 START=99
 
 POOL1="-o us.ozco.in:80 -O 12300:xRbYjN"
-POOL2="-o http://pit.deepbit.net:8332 -O xiangfu@openmobilefree.net_0:x"
-POOL3="-o http://pool.ABCPool.co:8332 -O xiangfu.0:x"
+POOL2="-o http://pool.ABCPool.co:8332 -O xiangfu.0:x"
+POOL3="-o http://pit.deepbit.net:8332 -O xiangfu.z@gmail.com_0:x"
 
 POOLS=" $POOL1 $POOL2 $POOL3 "
 
