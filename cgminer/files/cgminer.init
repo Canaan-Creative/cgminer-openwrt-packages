@@ -1,17 +1,47 @@
 #!/bin/sh /etc/rc.common
 START=99
 
-POOL1="-o us.ozco.in:80 -O 12300:xRbYjN"
-POOL2="-o http://pool.ABCPool.co:8332 -O xiangfu.0:x"
-POOL3="-o http://pit.deepbit.net:8332 -O xiangfu.z@gmail.com_0:x"
-
-POOLS=" $POOL1 $POOL2 $POOL3 "
-
 start() {
+	local _pool1url
+	local _pool1user
+	local _pool1pw
+
+	local _pool2url
+	local _pool2user
+	local _pool2pw
+
+	local _pool3url
+	local _pool3user
+	local _pool3pw
+
+	config_load cgminer
+
+	config_get _pool1url default pool1url
+	config_get _pool1user default pool1user
+	config_get _pool1pw default pool1pw
+	config_get _pool2url default pool2url
+	config_get _pool2user default pool2user
+	config_get _pool2pw default pool2pw
+	config_get _pool3url default pool3url
+	config_get _pool3user default pool3user
+	config_get _pool3pw default pool3pw
+
+	if [ "$_pool1url" != "" -a "$_pool1user" != "" -a "$_pool1pw" != "" ]; then
+	    POOL1="-o $_pool1url -O $_pool1user:$_pool1pw"
+	fi
+	if [ "$_pool2url" != "" -a "$_pool2user" != "" -a "$_pool2pw" != "" ]; then
+	    POOL2="-o $_pool2url -O $_pool2user:$_pool2pw"
+	fi
+	if [ "$_pool3url" != "" -a "$_pool3user" != "" -a "$_pool3pw" != "" ]; then
+	    POOL3="-o $_pool3url -O $_pool3user:$_pool3pw"
+	fi
+
+	PARAMS=" $POOL1 $POOL2 $POOL3 "
 	DEVS=`find /dev/ -type c -name "ttyUSB*"  | sed 's/^/-S/' |  sed ':a;N;$!ba;s/\n/ /g'`
+
 	ntpd -d -n -q -N -p 0.openwrt.pool.ntp.org \
 		-p 1.openwrt.pool.ntp.org -p 2.openwrt.pool.ntp.org -p 3.openwrt.pool.ntp.org && \
-	cgminer -q --api-allow "W:0/0" --api-listen $POOLS $DEVS &
+	cgminer -q --api-allow "W:0/0" --api-listen $PARAMS $DEVS &
 }
 
 stop() {
