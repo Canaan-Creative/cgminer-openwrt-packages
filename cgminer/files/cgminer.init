@@ -1,6 +1,9 @@
 #!/bin/sh /etc/rc.common
 START=99
 
+APP=/usr/bin/cgminer
+PID_FILE=/var/run/$APP.pid
+
 start() {
 	local _pool1url
 	local _pool1user
@@ -36,14 +39,14 @@ start() {
 	    POOL3="-o $_pool3url -O $_pool3user:$_pool3pw"
 	fi
 
-	PARAMS=" $POOL1 $POOL2 $POOL3 "
 	DEVS=`find /dev/ -type c -name "ttyUSB*"  | sed 's/^/-S/' |  sed ':a;N;$!ba;s/\n/ /g'`
+	PARAMS=" $DEVS $POOL1 $POOL2 $POOL3 --avalon-options 115200:8:10:50 -q --api-allow "W:0/0" --api-listen "
 
 	ntpd -d -n -q -N -p 0.openwrt.pool.ntp.org \
 		-p 1.openwrt.pool.ntp.org -p 2.openwrt.pool.ntp.org -p 3.openwrt.pool.ntp.org && \
-	cgminer -q --api-allow "W:0/0" --api-listen $PARAMS $DEVS &
+	start-stop-daemon -S -x $APP -p $PID_FILE -m -b -- $PARAMS
 }
 
 stop() {
-	killall -s 9 cgminer
+	start-stop-daemon -K -n $APP -p $PID_FILE -s TERM
 }
