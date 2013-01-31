@@ -1,6 +1,18 @@
 #!/bin/sh
-
 # This file is for cron job
-if ! pidof cgminer; then
-	/etc/init.d/cgminer start 
+
+C=`pidof cgminer | wc -w`
+if [ "$C" != "1" ]; then
+	/etc/init.d/cgminer stop
+	/etc/init.d/cgminer start
+	exit 0;
+fi
+
+A=`cat /tmp/cm.log`
+B=`cgminer-api  | grep "^   \[Accepted\]"`
+cgminer-api  | grep "^   \[Accepted\]" > /tmp/cm.log
+if [ "$A" == "$B" ]; then
+	/etc/init.d/cgminer stop
+	/etc/init.d/cgminer start
+	exit 0;
 fi
