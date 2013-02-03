@@ -40,7 +40,7 @@ start() {
 	fi
 
 	DEVS=`find /dev/ -type c -name "ttyUSB*"  | sed 's/^/-S/' |  sed ':a;N;$!ba;s/\n/ /g'`
-	PARAMS=" $DEVS $POOL1 $POOL2 $POOL3 --avalon-options 115200:24:10:50 -q --api-allow "W:0/0" --api-listen "
+	PARAMS=" $DEVS $POOL1 $POOL2 $POOL3 --avalon-options 115200:24:10:45:282 -q --api-allow "W:0/0" --api-listen "
 
 	ntpd -d -n -q -N -p 0.openwrt.pool.ntp.org \
 		-p 1.openwrt.pool.ntp.org -p 2.openwrt.pool.ntp.org -p 3.openwrt.pool.ntp.org && \
