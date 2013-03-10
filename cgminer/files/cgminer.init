@@ -17,6 +17,9 @@ start() {
 	local _pool3user
 	local _pool3pw
 
+	local _cf
+	local _mc
+
 	config_load cgminer
 
 	config_get _pool1url default pool1url
@@ -29,6 +32,9 @@ start() {
 	config_get _pool3user default pool3user
 	config_get _pool3pw default pool3pw
 
+	config_get _cf default chip_frequency
+	config_get _mc default miner_count
+
 	if [ "$_pool1url" != "" -a "$_pool1user" != "" -a "$_pool1pw" != "" ]; then
 	    POOL1="-o $_pool1url -O $_pool1user:$_pool1pw"
 	fi
@@ -39,8 +45,24 @@ start() {
 	    POOL3="-o $_pool3url -O $_pool3user:$_pool3pw"
 	fi
 
+	case "$_cf" in
+	256)
+		CF="50:256"
+		;;
+	270)
+		CF="47:270"
+		;;
+	282)
+		CF="45:282"
+		;;
+	300)
+		CF="40:300"
+		;;
+	esac
+
 	DEVS=`find /dev/ -type c -name "ttyUSB*"  | sed 's/^/-S/' |  sed ':a;N;$!ba;s/\n/ /g'`
-	PARAMS=" $DEVS $POOL1 $POOL2 $POOL3 --avalon-options 115200:24:10:45:282 -q --api-allow "W:0/0" --api-listen "
+	AOPTIONS=" --avalon-options 115200:$_mc:10:$CF "
+	PARAMS=" $AOPTIONS $DEVS $POOL1 $POOL2 $POOL3 --api-allow "W:0/0" --api-listen -q "
 
 	ntpd -d -n -q -N -p 0.openwrt.pool.ntp.org \
 		-p 1.openwrt.pool.ntp.org -p 2.openwrt.pool.ntp.org -p 3.openwrt.pool.ntp.org && \
