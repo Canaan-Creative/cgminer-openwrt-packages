@@ -66,8 +66,12 @@ start() {
 	AOPTIONS=" --avalon-options 115200:$_mc:10:$CF "
 	PARAMS=" $AOPTIONS $DEVS $POOL1 $POOL2 $POOL3 --api-allow $_aa --api-listen -q "
 
-	ntpd -d -n -q -N -p 0.openwrt.pool.ntp.org \
-		-p 1.openwrt.pool.ntp.org -p 2.openwrt.pool.ntp.org -p 3.openwrt.pool.ntp.org && \
+	ntpd -d -n -q -N \
+	    -p 0.openwrt.pool.ntp.org \
+	    -p 1.openwrt.pool.ntp.org \
+	    -p 2.openwrt.pool.ntp.org \
+	    -p 3.openwrt.pool.ntp.org
+
 	start-stop-daemon -S -x $APP -p $PID_FILE -m -b -- $PARAMS
 }
 
