@@ -72,7 +72,7 @@ start() {
 	AOPTIONS=" --avalon-options 115200:$_mc:10:$CF "
 	PARAMS=" $AOPTIONS $DEVS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen -q "
 
-	$APP $DEVS -o 127.0.0.1:8888 -O fa:ke --avalon-options 115200:32:10:50:256
+	$APP $DEVS -o 127.0.0.1:8888 -O fa:ke --avalon-options 115200:32:10:50:256 -q
 
 	ntpd -d -n -q -N \
 	    -p 0.openwrt.pool.ntp.org \
