@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# Hook the Cgminer Configuration + /etc/init.d/cgminer restart
+echo '' >> /etc/config/ucitrack
+echo 'config cgminer' >> /etc/config/ucitrack
+echo -e '\toption init cgminer' >> /etc/config/ucitrack
+
+# Enable the cgminer service
 /etc/init.d/cgminer enable
 
 # Setup the cron job
