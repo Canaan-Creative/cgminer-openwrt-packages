@@ -27,7 +27,7 @@ define Package/cgminer
 	CATEGORY:=Utilities
 	TITLE:=cgminer (FPGA Miner)
 	URL:=https://github.com/ckolivas/cgminer
-	DEPENDS:=+libcurl +libpthread +jansson +udev
+	DEPENDS:=+libcurl +libpthread +jansson
 endef
 
 define Package/cgminer/description
