@@ -20,6 +20,9 @@ start() {
 
 	local _cf
 	local _mc
+	local _aa
+
+	local _pb
 
 	config_load cgminer
 
@@ -37,6 +40,8 @@ start() {
 	config_get _mc default miner_count
 
 	config_get _aa default api_allow
+
+	config_get _pb default pool_balance
 
 	if [ "$_pool1url" != "" -a "$_pool1user" != "" -a "$_pool1pw" != "" ]; then
 	    POOL1="-o $_pool1url -O $_pool1user:$_pool1pw"
@@ -65,7 +70,7 @@ start() {
 
 	DEVS=`find /dev/ -type c -name "ttyUSB*"  | sed 's/^/-S/' |  sed ':a;N;$!ba;s/\n/ /g'`
 	AOPTIONS=" --avalon-options 115200:$_mc:10:$CF "
-	PARAMS=" $AOPTIONS $DEVS $POOL1 $POOL2 $POOL3 --api-allow $_aa --api-listen -q "
+	PARAMS=" $AOPTIONS $DEVS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen -q "
 
 	$APP $DEVS -O 127.0.0.1 -o x:x --avalon-options 115200:32:10:50:256
 
