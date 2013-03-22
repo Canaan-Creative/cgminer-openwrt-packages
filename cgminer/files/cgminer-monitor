@@ -1,18 +1,17 @@
 #!/bin/sh
 # This file is for cron job
 
+# This if for make sure the start cgminer when there is network problem
 C=`pidof cgminer | wc -w`
 if [ "$C" != "1" ]; then
-	/etc/init.d/cgminer stop
-	/etc/init.d/cgminer start
-	exit 0;
+    /etc/init.d/cgminer restart
+    exit 0;
 fi
 
 A=`cat /tmp/cm.log`
 B=`cgminer-api  | grep "^   \[Accepted\]"`
 echo $B > /tmp/cm.log
-if [ "$A" == "$B" ]; then
-	/etc/init.d/cgminer stop
-	/etc/init.d/cgminer start
+if [ "$B" != "" -a "$A" == "$B" ]; then
+    /etc/init.d/cgminer restart
 	exit 0;
 fi
