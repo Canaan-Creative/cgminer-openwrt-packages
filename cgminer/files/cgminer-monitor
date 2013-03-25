@@ -10,7 +10,7 @@ fi
 
 A=`cat /tmp/cm.log`
 B=`cgminer-api  | grep "^   \[Accepted\]"`
-echo $B > /tmp/cm.log
+echo "$B" > /tmp/cm.log
 if [ "$B" != "" -a "$A" == "$B" ]; then
     /etc/init.d/cgminer restart
 	exit 0;
