@@ -9,9 +9,9 @@ if [ "$C" != "1" ]; then
 fi
 
 A=`cat /tmp/cm.log`
-B=`cgminer-api  | grep "^   \[Accepted\]"`
+B=`cgminer-api devs | grep "^   \[Diff1 Work\]"`
 echo "$B" > /tmp/cm.log
 if [ "$B" != "" -a "$A" == "$B" ]; then
     /etc/init.d/cgminer restart
-	exit 0;
+    exit 0;
 fi
