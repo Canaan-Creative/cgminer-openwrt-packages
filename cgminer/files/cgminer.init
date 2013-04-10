@@ -76,15 +76,17 @@ start() {
 	sleep 1
 
 	if [ ! -f /tmp/cgminer-ntpd-done ]; then
-		ntpd -d -n -q -N \
-		    -p 0.openwrt.pool.ntp.org \
-		    -p 1.openwrt.pool.ntp.org \
-		    -p 2.openwrt.pool.ntp.org \
-		    -p 3.openwrt.pool.ntp.org
+		while [ "$NTPD_RET" != "0" ]; do
+			ntpd -d -n -q -N \
+			    -p 0.openwrt.pool.ntp.org \
+			    -p 1.openwrt.pool.ntp.org \
+			    -p 2.openwrt.pool.ntp.org \
+			    -p 3.openwrt.pool.ntp.org
 
-		if [ "$?" == "0" ]; then
-			touch /tmp/cgminer-ntpd-done
-		fi
+			NTPD_RET=$?
+		done
+
+		touch /tmp/cgminer-ntpd-done
 	fi
 
 	start-stop-daemon -S -x $APP -p $PID_FILE -m -b -- $PARAMS
