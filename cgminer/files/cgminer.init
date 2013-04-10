@@ -73,12 +73,20 @@ start() {
 	PARAMS=" $AOPTIONS $DEVS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen -q "
 
 	$APP $DEVS --avalon-options 115200:$_mc:10:50:256 -q
+	sleep 1
 
-	ntpd -d -n -q -N \
-	    -p 0.openwrt.pool.ntp.org \
-	    -p 1.openwrt.pool.ntp.org \
-	    -p 2.openwrt.pool.ntp.org \
-	    -p 3.openwrt.pool.ntp.org && \
+	if [ ! -f /tmp/cgminer-ntpd-done ]; then
+		ntpd -d -n -q -N \
+		    -p 0.openwrt.pool.ntp.org \
+		    -p 1.openwrt.pool.ntp.org \
+		    -p 2.openwrt.pool.ntp.org \
+		    -p 3.openwrt.pool.ntp.org
+
+		if [ "$?" == "0" ]; then
+			touch /tmp/cgminer-ntpd-done
+		fi
+	fi
+
 	start-stop-daemon -S -x $APP -p $PID_FILE -m -b -- $PARAMS
 }
 
