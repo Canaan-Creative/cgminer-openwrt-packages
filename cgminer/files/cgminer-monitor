@@ -4,6 +4,8 @@
 # This if for make sure the start cgminer when there is network problem
 C=`pidof cgminer | wc -w`
 if [ "$C" != "1" ]; then
+    killall -s 9 cgminer
+    sleep 1
     /etc/init.d/cgminer restart
     exit 0;
 fi
