@@ -23,6 +23,7 @@ start() {
 	local _aa
 
 	local _pb
+	local _mo
 
 	config_load cgminer
 
@@ -42,6 +43,7 @@ start() {
 	config_get _aa default api_allow
 
 	config_get _pb default pool_balance
+	config_get _mo default more_options
 
 	if [ "$_pool1url" != "" -a "$_pool1user" != "" -a "$_pool1pw" != "" ]; then
 	    POOL1="-o $_pool1url -O $_pool1user:$_pool1pw"
@@ -70,7 +72,7 @@ start() {
 
 	DEVS=`find /dev/ -type c -name "ttyUSB*"  | sed 's/^/-S/' |  sed ':a;N;$!ba;s/\n/ /g'`
 	AOPTIONS=" --avalon-options 115200:$_mc:10:$CF "
-	PARAMS=" $AOPTIONS $DEVS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen -q "
+	PARAMS=" $AOPTIONS $DEVS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen -q $_mo"
 
 	$APP $DEVS --avalon-options 115200:$_mc:10:50:256 -q >/dev/null 2>&1
 	sleep 1

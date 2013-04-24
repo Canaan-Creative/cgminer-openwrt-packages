@@ -14,6 +14,8 @@ A=`cat /tmp/cm.log`
 B=`cgminer-api devs | grep "^   \[Diff1 Work\]"`
 echo "$B" > /tmp/cm.log
 if [ "$B" != "" -a "$A" == "$B" ]; then
+    killall -s 9 cgminer
+    sleep 1
     /etc/init.d/cgminer restart
     exit 0;
 fi
