@@ -6,10 +6,10 @@
 if [ "${PRODUCT}" = "403/6001/600" ] && [ "${INTERFACE}" = "255/255/255" ] && [ "$TYPE" = "0/0/0" ]; then
 	case "$ACTION" in
 		add)
-			/etc/init.d/cgminer stop
-			/etc/init.d/cgminer start &
+			/etc/init.d/cgminer restart
 			;;
 		remove)
+			/etc/init.d/cgminer stop
 			;;
 	esac
 fi
@@ -18,10 +18,10 @@ fi
 if [ "${PRODUCT}" = "67b/2303/400" ] && [ "$TYPE" = "0/0/0" ] && [ "$INTERFACE" = "255/0/0" ]; then
 	case "$ACTION" in
 		add)
-			/etc/init.d/cgminer stop
-			/etc/init.d/cgminer start &
+			/etc/init.d/cgminer restart
 			;;
 		remove)
+			/etc/init.d/cgminer stop
 			;;
 	esac
 fi
