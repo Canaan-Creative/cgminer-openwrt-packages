@@ -72,7 +72,7 @@ start() {
 
 	DEVS=`find /dev/ -type c -name "ttyUSB*"  | sed 's/^/-S/' |  sed ':a;N;$!ba;s/\n/ /g'`
 	AOPTIONS=" --avalon-options 115200:$_mc:10:$CF "
-	PARAMS=" $AOPTIONS $DEVS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen -q $_mo"
+	PARAMS=" $AOPTIONS $DEVS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen $_mo"
 
 	$APP $DEVS --avalon-options 115200:$_mc:10:50:256 -q >/dev/null 2>&1
 	sleep 1
