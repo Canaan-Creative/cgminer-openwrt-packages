@@ -46,7 +46,7 @@ endef
 
 
 define Package/cgminer/install
-	$(INSTALL_DIR) $(1)/usr/bin $(1)/etc/init.d $(1)/etc/hotplug.d/usb
+	$(INSTALL_DIR) $(1)/usr/bin $(1)/etc/init.d
 	$(INSTALL_DIR) $(1)/etc/config
 
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/cgminer-api $(1)/usr/bin
@@ -55,7 +55,6 @@ define Package/cgminer/install
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer-monitor       $(1)/usr/bin
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer.init          $(1)/etc/init.d/cgminer
 
-	$(CP)          $(FILES_DIR)/20-cgminer.hotplug $(1)/etc/hotplug.d/usb/20-cgminer
 	$(CP)          $(FILES_DIR)/cgminer.config     $(1)/etc/config/cgminer
 endef
 
