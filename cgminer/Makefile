@@ -13,8 +13,8 @@ PKG_VERSION:=3.1.1
 PKG_RELEASE:=1
 PKG_INSTALL:=1
 
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=http://ck.kolivas.org/apps/cgminer/
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 
 PKG_FIXUP:=autoreconf
 
