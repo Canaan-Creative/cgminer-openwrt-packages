@@ -1,6 +1,6 @@
 #
 # Author: Xiangfu Liu <xiangfu@openmobilefree.net>
-# BTC Address: 12h6gdGnThW385JaX1LRMA8cXKmbYRTP8Q
+# Address: 12h6gdGnThW385JaX1LRMA8cXKmbYRTP8Q
 #
 # This is free and unencumbered software released into the public domain.
 # For details see the UNLICENSE file at the root of the source tree.
@@ -9,12 +9,10 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cgminer
-PKG_VERSION:=20130108
-PKG_REV:=HEAD
+PKG_VERSION:=3.1.1
 PKG_RELEASE:=1
 PKG_INSTALL:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_REV).tar.gz
 PKG_SOURCE_URL:=http://ck.kolivas.org/apps/cgminer/
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 
