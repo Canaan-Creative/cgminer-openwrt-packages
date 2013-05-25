@@ -12,5 +12,4 @@ config 'interface' 'lan'
 	option 'netmask' '255.255.255.0'
 	option 'ipaddr' '192.168.0.100'
 	option 'gateway' '192.168.0.1'
-	option 'dns' '8.8.8.8'
 
