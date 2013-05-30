@@ -11,7 +11,7 @@ if [ "$C" != "1" ]; then
 fi
 
 A=`cat /tmp/cm.log`
-B=`cgminer-api devs | grep "^   \[Diff1 Work\]"`
+B=`cgminer-api devs | grep "^   \[Last Valid Work\]"`
 echo "$B" > /tmp/cm.log
 if [ "$B" != "" -a "$A" == "$B" ]; then
     killall -s 9 cgminer
