@@ -39,7 +39,9 @@ TARGET_LDFLAGS += -Wl,-rpath-link=$(STAGING_DIR)/usr/lib
 
 define Build/Compile
 	$(call Build/Compile/Default)
-	( cd $(PKG_BUILD_DIR) && $(TARGET_CC) api-example.c -I compat/jansson -o cgminer-api; )
+	(cd $(PKG_BUILD_DIR) && \
+	  $(TARGET_CC) api-example.c -Icompat/jansson \
+	  -I$(STAGING_DIR)/usr/include/libusb-1.0 -o cgminer-api;)
 endef
 
 
