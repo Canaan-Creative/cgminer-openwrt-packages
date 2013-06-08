@@ -12,4 +12,6 @@ config 'interface' 'lan'
 	option 'netmask' '255.255.255.0'
 	option 'ipaddr' '192.168.0.100'
 	option 'gateway' '192.168.0.1'
+	option dns '192.168.0.1'
+	option broadcast '192.168.0.255'
 
