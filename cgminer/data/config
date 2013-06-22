@@ -6,6 +6,9 @@ CONFIG_TARGET_ar71xx=y
 CONFIG_TARGET_ar71xx_generic=y
 CONFIG_TARGET_ar71xx_generic_TLWR703=y
 
+# CONFIG_PACKAGE_kmod-ppp is not set
+# CONFIG_PACKAGE_kmod-pppoe is not set
+# CONFIG_PACKAGE_kmod-pppox is not set
 CONFIG_PACKAGE_kmod-usb-serial=y
 CONFIG_PACKAGE_kmod-usb-serial-ftdi=y
 
@@ -15,6 +18,8 @@ CONFIG_TARGET_ROOTFS_SQUASHFS=y
 # CONFIG_BUILD_PATENTED is not set
 CONFIG_SDK=y
 
-CONFIG_PACKAGE_luci=y
+# CONFIG_PACKAGE_ppp is not set
+# CONFIG_PACKAGE_ppp-mod-pppoe is not set
 
+CONFIG_PACKAGE_luci=y
 CONFIG_PACKAGE_cgminer=y
