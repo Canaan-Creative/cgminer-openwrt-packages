@@ -10,11 +10,15 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cgminer
 PKG_VERSION:=3.2.2
+PKG_REV:=37815e04bb202b2c670e1bb3527e8306d5884e68
 PKG_RELEASE:=1
 PKG_INSTALL:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=http://ck.kolivas.org/apps/cgminer/
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_REV).tar.bz2
+PKG_SOURCE_URL:=git://github.com/ckolivas/cgminer.git
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_VERSION:=$(PKG_REV)
 
 PKG_FIXUP:=autoreconf
 
