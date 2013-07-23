@@ -80,10 +80,13 @@ start() {
 
 	esac
 
-	AOPTIONS=" --avalon-options 115200:$_mc:10:$CF "
-	PARAMS=" --lowmem $AOPTIONS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen $_mo"
+	config_get _target default target
+	config_get _overheat default overheat
 
-	$APP --avalon-options 115200:$_mc:10:50:256 -q >/dev/null 2>&1
+	AOPTIONS=" --avalon-options 115200:$_mc:10:$CF "
+	PARAMS=" --lowmem $AOPTIONS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen $_mo --avalon-cutoff $_overheat --avalon-temp $_target"
+
+	$APP --lowmem --avalon-options 115200:$_mc:10:50:256 -q >/dev/null 2>&1
 	sleep 1
 
 	if [ ! -f /tmp/cgminer-ntpd-done ]; then
