@@ -43,6 +43,8 @@ start() {
 	config_get _aa default api_allow
 
 	config_get _pb default pool_balance
+	config_get _target default target
+	config_get _overheat default overheat
 	config_get _mo default more_options
 
 	if [ "$_pool1url" != "" -a "$_pool1user" != "" -a "$_pool1pw" != "" ]; then
@@ -55,38 +57,12 @@ start() {
 	    POOL3="-o $_pool3url -O $_pool3user:$_pool3pw"
 	fi
 
-	case "$_cf" in
-	256)
-		CF="50:256"
-		;;
-	270)
-		CF="47:270"
-		;;
-	282)
-		CF="45:282"
-		;;
-	300)
-		CF="43:300"
-		;;
-	325)
-		CF="39:325"
-		;;
-	350)
-		CF="36:350"
-		;;
-	375)
-		CF="34:375"
-		;;
+        TO=$(( 12690 / $_cf ))
 
-	esac
-
-	config_get _target default target
-	config_get _overheat default overheat
-
-	AOPTIONS=" --avalon-options 115200:$_mc:10:$CF "
+	AOPTIONS=" --avalon-options 115200:$_mc:10:$TO:$_cf "
 	PARAMS=" --lowmem $AOPTIONS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen $_mo --avalon-cutoff $_overheat --avalon-temp $_target"
 
-	$APP --lowmem --avalon-options 115200:$_mc:10:50:256 -q >/dev/null 2>&1
+	$APP --lowmem --avalon-options 115200:$_mc:10:41:300 -q >/dev/null 2>&1
 	sleep 1
 
 	if [ ! -f /tmp/cgminer-ntpd-done ]; then
