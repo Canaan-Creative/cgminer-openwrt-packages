@@ -28,5 +28,5 @@ CONFIG_PACKAGE_luci-theme-openwrt=y
 # CONFIG_PACKAGE_ip6tables is not set
 # CONFIG_PACKAGE_6relayd is not set
 # CONFIG_PACKAGE_odhcp6c is not set
-# CONFIG_PACKAGE_uboot-envtools is not set
+# CONFIG_DEFAULT_uboot-envtools is not set
 CONFIG_PACKAGE_cgminer=y
