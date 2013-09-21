@@ -1,0 +1,31 @@
+Index: libs/curl/Makefile
+===================================================================
+--- libs/curl/Makefile	(revision 38031)
++++ libs/curl/Makefile	(working copy)
+@@ -46,7 +46,7 @@
+   $(call Package/curl/Default)
+   SECTION:=libs
+   CATEGORY:=Libraries
+-  DEPENDS:=+libopenssl +zlib
++  DEPENDS:=+zlib
+   TITLE:=A client-side URL transfer library
+ endef
+ 
+@@ -73,7 +73,7 @@
+ 	--enable-tftp \
+ 	--disable-verbose \
+ 	--with-random="/dev/urandom" \
+-	--with-ssl="$(STAGING_DIR)/usr" \
++	--without-ssl \
+ 	--without-ca-bundle \
+ 	--without-gnutls \
+ 	--without-krb4 \
+@@ -84,7 +84,7 @@
+ 	$(call autoconf_bool,CONFIG_IPV6,ipv6) \
+ 
+ CONFIGURE_VARS += \
+-	LIBS="-lcrypto -lssl -lz" \
++	LIBS="-lz" \
+ 	CC="$(filter-out ccache,$(TARGET_CC))"
+ 
+ define Build/Compile
