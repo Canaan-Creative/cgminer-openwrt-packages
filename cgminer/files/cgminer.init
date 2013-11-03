@@ -37,6 +37,7 @@ start() {
 	config_get _pool3user default pool3user
 	config_get _pool3pw default pool3pw
 
+	config_get _asic default asic
 	config_get _cf default chip_frequency
 	config_get _mc default miner_count
 
@@ -57,12 +58,13 @@ start() {
 	    POOL3="-o $_pool3url -O $_pool3user:$_pool3pw"
 	fi
 
-        TO=$(( 12690 / $_cf ))
+	CHIP_NUM=10
+	TO=$(( 12690 * 6 / 2 / $_cf / $CHIP_NUM))
 
-	AOPTIONS=" --avalon-options 115200:$_mc:10:$TO:$_cf "
+	AOPTIONS=" --avalon-options 115200:$_mc:$CHIP_NUM:$TO:$_cf:$_asic "
 	PARAMS=" --lowmem $AOPTIONS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen $_mo --avalon-cutoff $_overheat --avalon-temp $_target"
 
-	$APP --lowmem --avalon-options 115200:$_mc:10:41:300 -q >/dev/null 2>&1
+	$APP --lowmem $AOPTIONS -q >/dev/null 2>&1
 	sleep 1
 
 	if [ ! -f /tmp/cgminer-ntpd-done ]; then
