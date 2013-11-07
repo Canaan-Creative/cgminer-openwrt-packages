@@ -59,7 +59,10 @@ start() {
 	fi
 
 	CHIP_NUM=10
-	TO=$(( 12690 * 6 / 2 / $_cf / $CHIP_NUM))
+	TO=$(( 12690 / $_cf ))
+	if [ "$_asic" == "55" ]; then
+	    TO=$(( 38000 / $CHIP_NUM / $_cf ))
+	fi
 
 	AOPTIONS=" --avalon-options 115200:$_mc:$CHIP_NUM:$TO:$_cf:$_asic "
 	PARAMS=" --lowmem $AOPTIONS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen $_mo --avalon-cutoff $_overheat --avalon-temp $_target"
