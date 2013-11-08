@@ -1,15 +1,15 @@
-From 167b1b6ee537de01e107e1d82f041fc0f91fd2ec Mon Sep 17 00:00:00 2001
+From 0a78bb8fb11a12ee0b679d8066f35b8b1b96bad0 Mon Sep 17 00:00:00 2001
 From: Xiangfu <xiangfu@openmobilefree.net>
 Date: Fri, 8 Nov 2013 01:03:01 +0800
-Subject: [PATCH] add 55nm prototype support
+Subject: [PATCH 1/2] add 55nm prototype support
 
 ---
- driver-avalon.c | 100 ++++++++++++++++++++++++++++++++++++++++++++++----------
- driver-avalon.h |   3 +-
- 2 files changed, 84 insertions(+), 19 deletions(-)
+ driver-avalon.c | 91 ++++++++++++++++++++++++++++++++++++++++++++++++---------
+ driver-avalon.h |  3 +-
+ 2 files changed, 80 insertions(+), 14 deletions(-)
 
 diff --git a/driver-avalon.c b/driver-avalon.c
-index 53704e9..b0df7fa 100644
+index 53704e9..6c6f692 100644
 --- a/driver-avalon.c
 +++ b/driver-avalon.c
 @@ -59,7 +59,7 @@ static int avalon_init_task(struct avalon_task *at,
@@ -32,7 +32,7 @@ index 53704e9..b0df7fa 100644
 +		lefreq16 = (uint16_t *)&buf[6];
 +		*lefreq16 = htole16(frequency * 8);
 +	} else {
-+		switch (frequency / 2) { /* This is the real clock, Mhz */
++		switch (frequency / 2) { /* This is the real clock in Mhz, 1Mhz = 2Mhs */
 +		case 500:
 +			buf[6] = 0xe0;
 +			buf[7] = 0x94;
@@ -92,15 +92,7 @@ index 53704e9..b0df7fa 100644
  
  	wait_avalon_ready(avalon);
  	ret = avalon_send_task(&at, avalon);
-@@ -378,16 +429,16 @@ static int avalon_reset(struct cgpu_info *avalon, bool initial)
- 	return 0;
- }
- 
--static int avalon_calc_timeout(int frequency)
-+static int avalon_calc_timeout(int frequency, int asic)
- {
--	return AVALON_TIMEOUT_FACTOR / frequency;
-+	return (AVALON_TIMEOUT_FACTOR / (110 / asic)) / frequency;
+@@ -384,10 +435,10 @@ static int avalon_calc_timeout(int frequency)
  }
  
  static bool get_options(int this_option_offset, int *baud, int *miner_count,
@@ -124,12 +116,10 @@ index 53704e9..b0df7fa 100644
  					tmp = atoi(colon4);
  					if (tmp < AVALON_MIN_FREQUENCY || tmp > AVALON_MAX_FREQUENCY) {
  						quit(1, "Invalid avalon-options for frequency, must be %d <= frequency <= %d",
-@@ -497,7 +552,13 @@ static bool get_options(int this_option_offset, int *baud, int *miner_count,
- 					}
+@@ -498,6 +553,12 @@ static bool get_options(int this_option_offset, int *baud, int *miner_count,
  					*frequency = tmp;
  					if (timeout_default)
--						*timeout = avalon_calc_timeout(*frequency);
-+						*timeout = avalon_calc_timeout(*frequency, 110);
+ 						*timeout = avalon_calc_timeout(*frequency);
 +					if (colon5 && *colon5) {
 +						tmp = atoi(colon5);
 +						if (tmp != 110 && tmp != 55)
@@ -188,24 +178,6 @@ index 53704e9..b0df7fa 100644
  		info->baud = AVALON_IO_SPEED;
  		info->asic_count = AVALON_DEFAULT_ASIC_NUM;
  		switch (usb_ident(avalon)) {
-@@ -1019,7 +1083,7 @@ static void bitburner_rotate_array(struct cgpu_info *avalon)
- 
- static void avalon_set_timeout(struct avalon_info *info)
- {
--	info->timeout = avalon_calc_timeout(info->frequency);
-+	info->timeout = avalon_calc_timeout(info->frequency, info->asic);
- }
- 
- static void avalon_set_freq(struct cgpu_info *avalon, int frequency)
-@@ -1113,7 +1177,7 @@ static void *avalon_send_tasks(void *userdata)
- 		avalon_adjust_freq(info, avalon);
- 
- 		/* A full nonce range */
--		us_timeout = 0x100000000ll / info->asic_count / info->frequency;
-+		us_timeout = 0x100000000ll / info->asic_count / info->frequency / (110 / info->asic);
- 		cgsleep_prepare_r(&ts_start);
- 
- 		mutex_lock(&info->qlock);
 @@ -1130,7 +1194,7 @@ static void *avalon_send_tasks(void *userdata)
  			if (likely(j < avalon->queued && !info->overheat && avalon->works[i])) {
  				avalon_init_task(&at, 0, 0, info->fan_pwm,
@@ -242,6 +214,14 @@ index 53704e9..b0df7fa 100644
  				/* Reset the auto_queued count if we end up
  				 * idling any miners. */
  				avalon_reset_auto(info);
+@@ -1568,6 +1632,7 @@ static struct api_data *avalon_api_stats(struct cgpu_info *cgpu)
+ 		root = api_add_string(root, "version", buf, true);
+ 	}
+ 	root = api_add_uint32(root, "Controller Version", &(info->ctlr_ver), false);
++	root = api_add_uint32(root, "Avalon Chip", &(info->asic), false);
+ 
+ 	return root;
+ }
 diff --git a/driver-avalon.h b/driver-avalon.h
 index ea32bc0..296d9ac 100644
 --- a/driver-avalon.h
