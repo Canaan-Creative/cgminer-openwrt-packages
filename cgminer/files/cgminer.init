@@ -58,11 +58,10 @@ start() {
 	    POOL3="-o $_pool3url -O $_pool3user:$_pool3pw"
 	fi
 
+	# (1.67/50) == (2^32/1000/1000/$_cf/$CHIP_NUM/TO)
+	# 1.67 Second in FPGA is 50, a 256Mhs chip needs 16.7s finish 2^32 hashs
 	CHIP_NUM=10
-	TO=$(( 12690 / $_cf ))
-	if [ "$_asic" == "55" ]; then
-	    TO=$(( 38000 / $CHIP_NUM / $_cf ))
-	fi
+	TO=$(( 128591 / $CHIP_NUM / $_cf ))
 
 	AOPTIONS=" --avalon-options 115200:$_mc:$CHIP_NUM:$TO:$_cf:$_asic "
 	PARAMS=" --lowmem $AOPTIONS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen $_mo --avalon-cutoff $_overheat --avalon-temp $_target"
