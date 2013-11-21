@@ -1,17 +1,19 @@
-From d2899b92d9c5f810f654e125ac1ae24b24ac60c3 Mon Sep 17 00:00:00 2001
+From 7751e7a404e55411aea9b61d467808a1afb0c98e Mon Sep 17 00:00:00 2001
 From: Xiangfu <xiangfu@openmobilefree.net>
 Date: Sun, 10 Nov 2013 19:14:31 +0800
-Subject: [PATCH 2/2] update with new fpga firmware 2013-11-08
+Subject: [PATCH 2/3] update with new fpga firmware 2013-11-08 for Avalon 55nm
+ prototype  FPGA controller URL:
+ http://downloads.canaan-creative.com/hardware/A3255/prototype/FIRMWARE/2013-11-08/FPGA/
 
 ---
  driver-avalon.c | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/driver-avalon.c b/driver-avalon.c
-index cf6094a..2cb2239 100644
+index 791cf86..c72d5f5 100644
 --- a/driver-avalon.c
 +++ b/driver-avalon.c
-@@ -269,6 +269,8 @@ static bool avalon_decode_nonce(struct thr_info *thr, struct cgpu_info *avalon,
+@@ -307,6 +307,8 @@ static bool avalon_decode_nonce(struct thr_info *thr, struct cgpu_info *avalon,
  	info = avalon->device_data;
  	info->matching_work[work->subid]++;
  	nonce = htole32(ar->nonce);
