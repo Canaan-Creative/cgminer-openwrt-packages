@@ -10,10 +10,17 @@ if [ "$C" != "1" ]; then
     exit 0;
 fi
 
-A=`cat /tmp/cm.log`
 B=`cgminer-api devs | grep "^   \[Last Valid Work\]"`
-echo "$B" > /tmp/cm.log
-if [ "$B" != "" -a "$A" == "$B" ]; then
+if [ "$?" != "0" ]; then
+    killall -s 9 cgminer
+    sleep 1
+    /etc/init.d/cgminer restart
+    exit 0;
+fi
+
+A=`cat /tmp/cm.log`
+echo -n "$B" > /tmp/cm.log
+if [ "$A" == "$B" ]; then
     killall -s 9 cgminer
     sleep 1
     /etc/init.d/cgminer restart
