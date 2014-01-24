@@ -19,6 +19,9 @@ start() {
 	local _pool3pw
 
 	local _cf
+	local _cv
+	local _fan
+
 	local _aa
 	local _pb
 	local _mo
@@ -36,6 +39,9 @@ start() {
 	config_get _pool3pw default pool3pw
 
 	config_get _cf default chip_frequency
+	config_get _cv default chip_voltage
+	config_get _fan default fan
+
 	config_get _aa default api_allow
 	config_get _pb default pool_balance
 	config_get _mo default more_options
@@ -50,8 +56,9 @@ start() {
 	    POOL3="-o $_pool3url -O $_pool3user:$_pool3pw"
 	fi
 
-	AVA2_OPTIONS=" --avalon-options 115200:$_mc:$CHIP_NUM:$TO:$_cf:$_asic "
-	PARAMS=" --lowmem $AVA2_OPTIONS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen $_mo "
+	DEVS=`find /dev/ -type c -name "ttyUSB*"  | sed 's/^/-S/' |  sed ':a;N;$!ba;s/\n/ /g'`
+	AVA2_OPTIONS=" --avalon2-fan $_fan --avalon2-freq $_cf --avalon2-voltage $_cv "
+	PARAMS=" ${DEVS} $AVA2_OPTIONS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen $_mo "
 
 	if [ ! -f /tmp/cgminer-ntpd-done ]; then
 		while [ "$NTPD_RET" != "0" ]; do
