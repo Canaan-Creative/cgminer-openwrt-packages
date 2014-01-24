@@ -37,9 +37,10 @@ define Package/cgminer
 	TITLE:=cgminer
 	URL:=https://github.com/ckolivas/cgminer
 ifeq ($(CONFIG_TARGET_brcm2708_RaspberryPi),y)
-	DEPENDS:=+libcurl +libpthread +jansson +udev
-else
 	DEPENDS:=+libcurl +libpthread +jansson +udev +libncurses
+else
+	DEPENDS:=+libcurl +libpthread +jansson +udev
+endif
 endef
 
 define Package/cgminer/description
