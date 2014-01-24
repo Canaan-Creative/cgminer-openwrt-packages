@@ -59,6 +59,15 @@ ifeq ($(CONFIG_CGMINER_AVALON2),)
 	CONFIGURE_ARGS += --without-curses --enable-avalon
 else
 	CONFIGURE_ARGS += --enable-avalon2
+
+define Build/Prepare
+	$(call Build/Prepare/Default)
+
+	wget -O $(PKG_BUILD_DIR)/0001-avalon2.patch \
+		"https://raw2.github.com/BitSyncom/avalon-extras/master/cgminer-patches/0001-avalon2.patch"
+	(cd $(PKG_BUILD_DIR); patch -Np1 < 0001-avalon2.patch;)
+endef
+
 endif
 
 define Build/Compile
