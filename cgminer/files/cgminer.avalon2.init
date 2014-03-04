@@ -26,6 +26,8 @@ start() {
 	local _pb
 	local _mo
 
+	local _ntpd_enable
+
 	config_load cgminer
 
 	config_get _pool1url default pool1url
@@ -46,6 +48,8 @@ start() {
 	config_get _pb default pool_balance
 	config_get _mo default more_options
 
+	config_get _ntpd_enable default ntpd_enable
+
 	if [ "$_pool1url" != "" -a "$_pool1user" != "" -a "$_pool1pw" != "" ]; then
 	    POOL1="-o $_pool1url -O $_pool1user:$_pool1pw"
 	fi
@@ -60,18 +64,20 @@ start() {
 	AVA2_OPTIONS=" --avalon2-fan $_fan --avalon2-freq $_cf --avalon2-voltage $_cv "
 	PARAMS=" ${DEVS} $AVA2_OPTIONS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen $_mo "
 
+	NTP_POOL="-p 0.openwrt.pool.ntp.org -p 1.openwrt.pool.ntp.org  -p 3.openwrt.pool.ntp.org -p 4.openwrt.pool.ntp.org"
+	ASIA="-p 1.cn.pool.ntp.org -p 3.asia.pool.ntp.org -p 2.asia.pool.ntp.org"
+
+	if [ "$_ntpd_enable" == "asia" ]; then
+	    NTP_POOL="${ASIA}"
+	fi
+
 	if [ ! -f /tmp/cgminer-ntpd-done ]; then
-		while [ "$NTPD_RET" != "0" ]; do
-			ntpd -d -n -q -N \
-			    -p 0.openwrt.pool.ntp.org \
-			    -p 1.openwrt.pool.ntp.org \
-			    -p 2.openwrt.pool.ntp.org \
-			    -p 3.openwrt.pool.ntp.org
+	    while [ "$NTPD_RET" != "0" ]; do
+		ntpd -d -n -q -N ${NTP_POOL}
+		NTPD_RET=$?
+	    done
 
-			NTPD_RET=$?
-		done
-
-		touch /tmp/cgminer-ntpd-done
+	    touch /tmp/cgminer-ntpd-done
 	fi
 
 	start-stop-daemon -S -x $APP -p $PID_FILE -m -b -- $PARAMS
