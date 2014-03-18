@@ -13,6 +13,12 @@ CONFIG_TARGET_ar71xx_generic_TLWR703=y
 # CONFIG_PACKAGE_kmod-pppox is not set
 CONFIG_PACKAGE_kmod-lib-crc-ccitt=y
 
+CONFIG_PACKAGE_kmod-usb-core=y
+CONFIG_PACKAGE_kmod-usb-serial=y
+CONFIG_PACKAGE_kmod-usb-serial-ftdi=y
+CONFIG_PACKAGE_kmod-usb-serial-pl2303=y
+CONFIG_PACKAGE_kmod-usb2=y
+
 CONFIG_TARGET_ROOTFS_TARGZ=y
 CONFIG_TARGET_ROOTFS_JFFS2=y
 CONFIG_TARGET_ROOTFS_SQUASHFS=y
