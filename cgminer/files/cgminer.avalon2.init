@@ -26,7 +26,7 @@ start() {
 	local _pb
 	local _mo
 
-	local _ntpd_enable
+	local _ntp_enable
 
 	config_load cgminer
 
@@ -48,7 +48,7 @@ start() {
 	config_get _pb default pool_balance
 	config_get _mo default more_options
 
-	config_get _ntpd_enable default ntpd_enable
+	config_get _ntp_enable default ntp_enable
 
 	if [ "$_pool1url" != "" -a "$_pool1user" != "" -a "$_pool1pw" != "" ]; then
 	    POOL1="-o $_pool1url -O $_pool1user:$_pool1pw"
@@ -67,11 +67,12 @@ start() {
 	NTP_POOL="-p 0.openwrt.pool.ntp.org -p 1.openwrt.pool.ntp.org  -p 3.openwrt.pool.ntp.org -p 4.openwrt.pool.ntp.org"
 	ASIA="-p 1.cn.pool.ntp.org -p 3.asia.pool.ntp.org -p 2.asia.pool.ntp.org"
 
-	if [ "$_ntpd_enable" == "asia" ]; then
+	# _ntp_enable: openwrt, asia, globle
+	if [ "$_ntp_enable" == "asia" ]; then
 	    NTP_POOL="${ASIA}"
 	fi
 
-	if [ ! -f /tmp/cgminer-ntpd-done ]; then
+	if [ ! -f /tmp/cgminer-ntpd-done -a "$_ntp_enable" != "disable" ]; then
 	    while [ "$NTPD_RET" != "0" ]; do
 		ntpd -d -n -q -N ${NTP_POOL}
 		NTPD_RET=$?
