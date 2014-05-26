@@ -38,7 +38,7 @@ if [ "$?" != "0" ]; then
 fi
 
 A=`find /dev/ -name "ttyUSB*" | wc -l`
-if [ "$A" <> "$B" ]; then
+if [ "$A" != "$B" ]; then
     killall -s 9 cgminer
     sleep 1
     /etc/init.d/cgminer restart
