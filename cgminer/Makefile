@@ -10,13 +10,8 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cgminer
 
-ifeq ($(CONFIG_CGMINER_AVALON2),y)
 PKG_VERSION:=4.3.3
 PKG_REV:=1fa3d1d65f024f3bda3dad8ced7d127ce670d76d
-else
-PKG_VERSION:=3.9.0
-PKG_REV:=2d36f88e7ad1daf2cc81de8fb32181526dbe932a
-endif
 
 PKG_RELEASE:=1
 PKG_INSTALL:=1
@@ -36,10 +31,10 @@ define Package/cgminer
 	CATEGORY:=Utilities
 	TITLE:=cgminer
 	URL:=https://github.com/ckolivas/cgminer
-ifeq ($(CONFIG_TARGET_brcm2708_RaspberryPi),y)
-	DEPENDS:=+libcurl +libpthread +jansson +udev +libncurses
-else
+ifeq ($(CONFIG_TARGET_brcm2708_RaspberryPi),)
 	DEPENDS:=+libcurl +libpthread +jansson +udev
+else
+	DEPENDS:=+libcurl +libpthread +jansson +udev +libncurses
 endif
 endef
 
@@ -56,13 +51,17 @@ define Package/cgminer/config
 	endmenu
 endef
 
-CONFIGURE_ARGS += --disable-opencl --disable-adl
 TARGET_LDFLAGS += -Wl,-rpath-link=$(STAGING_DIR)/usr/lib
 
 ifeq ($(CONFIG_CGMINER_AVALON2),)
-	CONFIGURE_ARGS += --without-curses --enable-avalon
+	CONFIGURE_ARGS += --enable-avalon
 else
 	CONFIGURE_ARGS += --enable-avalon2
+endif
+
+ifeq ($(CONFIG_TARGET_brcm2708_RaspberryPi),)
+	CONFIGURE_ARGS += --without-curses
+endif
 
 define Build/Prepare
 	$(call Build/Prepare/Default)
