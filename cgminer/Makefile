@@ -71,8 +71,6 @@ define Build/Prepare
 	(cd $(PKG_BUILD_DIR); patch -Np1 < 0001-avalon2.patch;)
 endef
 
-endif
-
 define Build/Compile
 	$(call Build/Compile/Default)
 	(cd $(PKG_BUILD_DIR) && \
