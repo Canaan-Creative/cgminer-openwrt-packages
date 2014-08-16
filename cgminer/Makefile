@@ -10,8 +10,8 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cgminer
 
-PKG_VERSION:=4.3.3
-PKG_REV:=1fa3d1d65f024f3bda3dad8ced7d127ce670d76d
+PKG_VERSION:=4.5.0
+PKG_REV:=52103f626aad60a59713fa2e3fda7c5f53703de0
 
 PKG_RELEASE:=1
 PKG_INSTALL:=1
@@ -63,18 +63,10 @@ ifeq ($(CONFIG_TARGET_brcm2708_RaspberryPi),)
 	CONFIGURE_ARGS += --without-curses
 endif
 
-define Build/Prepare
-	$(call Build/Prepare/Default)
-
-	wget -O $(PKG_BUILD_DIR)/0001-avalon2.patch \
-		"https://raw2.github.com/BitSyncom/avalon-extras/master/cgminer-patches/0001-avalon2.patch"
-	(cd $(PKG_BUILD_DIR); patch -Np1 < 0001-avalon2.patch;)
-endef
-
 define Build/Compile
 	$(call Build/Compile/Default)
 	(cd $(PKG_BUILD_DIR) && \
-	  $(TARGET_CC) -Icompat/jansson -Icompat/libusb-1.0/libusb \
+	  $(TARGET_CC) -Icompat/jansson-2.6/src -Icompat/libusb-1.0/libusb
 	  api-example.c -o cgminer-api;)
 endef
 
