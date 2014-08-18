@@ -66,8 +66,7 @@ endif
 define Build/Compile
 	$(call Build/Compile/Default)
 	(cd $(PKG_BUILD_DIR) && \
-	  $(TARGET_CC) -Icompat/jansson-2.6/src -Icompat/libusb-1.0/libusb
-	  api-example.c -o cgminer-api;)
+	 $(TARGET_CC) -Icompat/jansson-2.6/src -Icompat/libusb-1.0/libusb api-example.c -o cgminer-api;)
 endef
 
 define Package/cgminer/install
