@@ -83,6 +83,12 @@ start() {
 		touch /tmp/cgminer-ntpd-done
 	fi
 
+        # Make sure udevd run before cgminer start
+        UDEVDCNT=`pidof udevd | wc -w`
+        if [ "$UDEVDCNT" == "0" ]; then
+                udevd --daemon
+        fi
+
 	start-stop-daemon -S -x $APP -p $PID_FILE -m -b -- $PARAMS
 }
 
