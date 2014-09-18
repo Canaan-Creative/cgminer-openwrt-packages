@@ -1,0 +1,25 @@
+From bbd42d8369343a782317c25c2be933e77956fc26 Mon Sep 17 00:00:00 2001
+From: Xiangfu <xiangfu@openmobilefree.net>
+Date: Mon, 1 Jul 2013 20:19:01 +0800
+Subject: [PATCH 1/2] add qi-jtag-serial cable
+
+---
+ cablelist.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/cablelist.txt b/cablelist.txt
+index 2d59dda..db37967 100644
+--- a/cablelist.txt
++++ b/cablelist.txt
+@@ -6,6 +6,8 @@
+ # Max_Freq == 0 mean use maximum speed of device
+ # Use 1500000 for all cable connected cables and max for all on board cables
+ 
++qi            ftdi    1500000 0x20b7:0x0713:
++qijtag        ftdi    1500000 0x20b7:0x0713:FTDIJTAG:1:0x00:0x10:0x00:0x00
+ ftdi          ftdi    1500000 0x0403:0x6010:                                       
+ minila        ftdi     800000 0x0403:0x6010:
+ ft232h        ftdi    1500000 0x0403:0x6014:                                      
+-- 
+1.8.1.2
+
