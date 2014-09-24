@@ -6,7 +6,7 @@ PKG_VERSION:=r$(PKG_REV)
 PKG_RELEASE:=1
 
 PKG_SOURCE=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_SOURCE_URL:=https://xc3sprog.svn.sourceforge.net/svnroot/xc3sprog/trunk
+PKG_SOURCE_URL:=https://svn.code.sf.net/p/xc3sprog/code/trunk
 PKG_SOURCE_PROTO:=svn
 PKG_SOURCE_VERSION=$(PKG_REV)
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
