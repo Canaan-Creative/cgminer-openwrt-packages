@@ -28,6 +28,7 @@ define Package/fpgatools/Default
 	CATEGORY:=Utilities
 	TITLE:=fpgatools
 	URL:=https://github.com/ckolivas/fpgatools
+	DEPENDS:=+libusb-compat +libftdi
 endef
 
 define Package/fpgatools/description
