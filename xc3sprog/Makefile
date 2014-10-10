@@ -32,6 +32,8 @@ define Package/xc3sprog/install
 	$(INSTALL_BIN) \
 		$(PKG_INSTALL_DIR)/usr/bin/* \
 		$(1)/usr/bin/
+
+	$(CP) ./root-files/* $(1)/usr/bin
 endef
 
 $(eval $(call BuildPackage,xc3sprog))
