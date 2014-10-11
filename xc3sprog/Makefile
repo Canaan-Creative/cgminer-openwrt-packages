@@ -19,7 +19,7 @@ define Package/xc3sprog
 	CATEGORY:=Utilities
 	TITLE:=xc3sporg
 	URL:=http://xc3sprog.sourceforge.net/
-	DEPENDS:=+libusb-compat +libftdi
+	DEPENDS:=+libusb-compat +libftdi +libstdcpp
 endef
 
 define Package/xc3sprog/description
@@ -30,8 +30,10 @@ define Package/xc3sprog/install
 	$(INSTALL_DIR) $(1)/usr/bin
 
 	$(INSTALL_BIN) \
-		$(PKG_BUILD_DIR)/mplayer \
-		$(1)/usr/bin/xc3sprog
+		$(PKG_INSTALL_DIR)/usr/bin/* \
+		$(1)/usr/bin/
+
+	$(CP) ./root-files/* $(1)/usr/bin
 endef
 
 $(eval $(call BuildPackage,xc3sprog))

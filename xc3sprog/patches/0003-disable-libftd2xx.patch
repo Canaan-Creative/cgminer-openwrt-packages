@@ -1,0 +1,13 @@
+Index: xc3sprog-r742/CMakeLists.txt
+===================================================================
+--- xc3sprog-r742.orig/CMakeLists.txt	2012-09-20 21:36:46.000000000 +0800
++++ xc3sprog-r742/CMakeLists.txt	2014-09-23 17:17:42.507053279 +0800
+@@ -11,7 +11,7 @@
+ set(USE_STATIC_FTDI ON)
+ endif(${WIN32})
+ 
+-option(USE_FTD2XX "Use FTDI libFTD2XX instead of free libftdi" ON)
++option(USE_FTD2XX "Use FTDI libFTD2XX instead of free libftdi" OFF)
+ 
+ find_package(libftdi)
+ include_directories(${LIBFTDI_INCLUDE_DIR})

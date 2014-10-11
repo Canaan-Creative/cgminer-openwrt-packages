@@ -1,0 +1,42 @@
+diff --git a/Makefile b/Makefile
+index 1aed6d1..a44dbe0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -245,8 +245,6 @@ install: fp2bit bit2fp
+ 	mkdir -p $(DESTDIR)/$(PREFIX)/bin/
+ 	install -m 755 fp2bit $(DESTDIR)/$(PREFIX)/bin/
+ 	install -m 755 bit2fp $(DESTDIR)/$(PREFIX)/bin/
+-	chrpath -d $(DESTDIR)/$(PREFIX)/bin/fp2bit
+-	chrpath -d $(DESTDIR)/$(PREFIX)/bin/bit2fp
+ 
+ uninstall:
+ 	@make -C libs uninstall
+diff --git a/libs/Makefile b/libs/Makefile
+index 159125a..1628cae 100644
+--- a/libs/Makefile
++++ b/libs/Makefile
+@@ -27,7 +27,7 @@ DYNAMIC_HEADS = bit.h control.h floorplan.h helper.h model.h parts.h
+ SHARED_FLAGS = -shared -Wl,-soname,$@.$(LIBS_VERSION_MAJOR)
+ .PHONY:	all clean install uninstall FAKE
+ 
+-all: $(DYNAMIC_LIBS) $(DYNAMIC_LIBS:.so=.a)
++all: $(DYNAMIC_LIBS)
+ 
+ include ../Makefile.common
+ 
+@@ -75,15 +75,11 @@ install: all
+ 	mkdir -p $(DESTDIR)/$(PREFIX)/lib/
+ 	install -m 644 $(DYNAMIC_HEADS) $(DESTDIR)/$(PREFIX)/include/
+ 	for f in $(DYNAMIC_LIBS); do \
+-	  chrpath -d $$f.$(LIBS_VERSION_MAJOR) && \
+ 	  install -m 644 $$f.$(LIBS_VERSION) $(DESTDIR)/$(PREFIX)/lib/$$f.$(LIBS_VERSION) && \
+ 	  (cd $(DESTDIR)/$(PREFIX)/lib/ && \
+ 	   ln -sf $$f.$(LIBS_VERSION) $$f.$(LIBS_VERSION_MAJOR) && \
+ 	   ln -sf $$f.$(LIBS_VERSION_MAJOR) $$f) \
+ 	  || exit 1; done
+-	for f in $(DYNAMIC_LIBS:.so=.a); do \
+-	  install -m 644 $$f $(DESTDIR)/$(PREFIX)/lib/$$f \
+-	  || exit 1; done
+ 
+ uninstall:
+ 	for f in $(DYNAMIC_HEADS); do rm -f $(DESTDIR)/$(PREFIX)/include/$$f || exit 1; done
