@@ -1,0 +1,46 @@
+#
+# This file must be copied to .config in the OpenWrt root folder,
+# then run: yes "" | make oldconfig > /dev/null
+#
+CONFIG_TARGET_ar71xx=y
+CONFIG_TARGET_ar71xx_generic=y
+CONFIG_TARGET_ar71xx_generic_TLWR703=y
+
+# CONFIG_PACKAGE_kmod-ip6tables is not set
+# CONFIG_PACKAGE_kmod-ipv6 is not set
+# CONFIG_PACKAGE_kmod-ppp is not set
+# CONFIG_PACKAGE_kmod-pppoe is not set
+# CONFIG_PACKAGE_kmod-pppox is not set
+CONFIG_PACKAGE_kmod-lib-crc-ccitt=y
+
+CONFIG_PACKAGE_kmod-usb-core=y
+CONFIG_PACKAGE_kmod-usb-serial=y
+CONFIG_PACKAGE_kmod-usb-serial-ftdi=y
+CONFIG_PACKAGE_kmod-usb-serial-pl2303=y
+CONFIG_PACKAGE_kmod-usb2=y
+
+CONFIG_TARGET_ROOTFS_TARGZ=y
+CONFIG_TARGET_ROOTFS_JFFS2=y
+CONFIG_TARGET_ROOTFS_SQUASHFS=y
+
+# CONFIG_BUILD_PATENTED is not set
+CONFIG_SDK=y
+
+# CONFIG_PACKAGE_ppp is not set
+# CONFIG_PACKAGE_ppp-mod-pppoe is not set
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-theme-openwrt=y
+
+# CONFIG_PACKAGE_ip6tables is not set
+# CONFIG_PACKAGE_6relayd is not set
+# CONFIG_PACKAGE_odhcp6c is not set
+# CONFIG_DEFAULT_uboot-envtools is not set
+CONFIG_PACKAGE_cgminer=y
+CONFIG_CGMINER_AVALON2=y
+
+# CONFIG_LIBCURL_POLARSSL is not set
+# CONFIG_LIBCURL_CYASSL is not set
+# CONFIG_LIBCURL_AXTLS is not set
+# CONFIG_LIBCURL_OPENSSL is not set
+# CONFIG_LIBCURL_GNUTLS is not set
+CONFIG_LIBCURL_NOSSL=y

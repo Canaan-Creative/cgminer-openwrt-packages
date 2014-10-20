@@ -1,3 +1,9 @@
-config CGMINER_AVALON2
-	bool "Enable Avalon2(A3255) support and disable Avalon(A3256)"
+config CGMINER_AVALON1
+	bool "Enable Avalon1(A3256) support"
 	default n
+config CGMINER_AVALON2
+	bool "Enable Avalon2(A3255)/Avalon3(A3233) support"
+	default n
+config CGMINER_AVALON4
+	bool "Enable Avalon4(A3222) support"
+	default y

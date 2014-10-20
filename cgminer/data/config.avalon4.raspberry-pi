@@ -1,0 +1,58 @@
+#
+# This file must be copied to .config in the OpenWrt root folder,
+# then run: yes "" | make oldconfig > /dev/null
+#
+CONFIG_TARGET_brcm2708=y
+CONFIG_TARGET_brcm2708_RaspberryPi=y
+
+#
+# Kernel
+#
+CONFIG_PACKAGE_kmod-lib-crc-ccitt=y
+CONFIG_PACKAGE_kmod-usb-serial=y
+CONFIG_PACKAGE_kmod-usb-serial-ftdi=y
+CONFIG_PACKAGE_kmod-usb-serial-pl2303=y
+
+#
+# Rootfs
+#
+CONFIG_TARGET_ROOTFS_TARGZ=y
+CONFIG_TARGET_ROOTFS_JFFS2=y
+CONFIG_TARGET_ROOTFS_SQUASHFS=y
+
+#
+# OpenWrt etc
+#
+# CONFIG_BUILD_PATENTED is not set
+
+#
+# Busybox
+#
+CONFIG_BUSYBOX_CONFIG_FEATURE_EDITING_SAVEHISTORY=y
+CONFIG_BUSYBOX_CONFIG_FEATURE_REVERSE_SEARCH=y
+
+#
+# Luci
+#
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-theme-openwrt=y
+
+#
+# Apps
+#
+CONFIG_PACKAGE_cgminer=y
+CONFIG_CGMINER_AVALON2=y
+
+CONFIG_PACKAGE_libncurses=y
+
+CONFIG_PACKAGE_cal=y
+CONFIG_PACKAGE_coreutils=y
+CONFIG_PACKAGE_screen=y
+CONFIG_PACKAGE_sed=y
+
+CONFIG_PACKAGE_pyserial=y
+CONFIG_PACKAGE_python=y
+CONFIG_PACKAGE_python-mini=y
+
+CONFIG_PACKAGE_fpgatools=m
+CONFIG_PACKAGE_xc3sprog=m

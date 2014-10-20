@@ -53,9 +53,13 @@ endef
 
 TARGET_LDFLAGS += -Wl,-rpath-link=$(STAGING_DIR)/usr/lib
 
-ifeq ($(CONFIG_CGMINER_AVALON2),)
+ifeq ($(CONFIG_CGMINER_AVALON1),y)
 	CONFIGURE_ARGS += --enable-avalon
-else
+endif
+ifeq ($(CONFIG_CGMINER_AVALON2),y)
+	CONFIGURE_ARGS += --enable-avalon2
+endif
+ifeq ($(CONFIG_CGMINER_AVALON4),y)
 	CONFIGURE_ARGS += --enable-avalon2
 endif
 
@@ -78,13 +82,21 @@ define Package/cgminer/install
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/cgminer  $(1)/usr/bin
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer-monitor        $(1)/usr/bin
 
-ifeq ($(CONFIG_CGMINER_AVALON2),)
+ifeq ($(CONFIG_CGMINER_AVALON1),y)
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer.init           $(1)/etc/init.d/cgminer
 	$(CP)          $(FILES_DIR)/cgminer.config         $(1)/etc/config/cgminer
-else
+endif
+
+ifeq ($(CONFIG_CGMINER_AVALON2),y)
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon2.init   $(1)/etc/init.d/cgminer
 	$(CP)          $(FILES_DIR)/cgminer.avalon2.config $(1)/etc/config/cgminer
 endif
+
+ifeq ($(CONFIG_CGMINER_AVALON4),y)
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon4.init   $(1)/etc/init.d/cgminer
+	$(CP)          $(FILES_DIR)/cgminer.avalon4.config $(1)/etc/config/cgminer
+endif
+
 endef
 
 $(eval $(call BuildPackage,cgminer))
