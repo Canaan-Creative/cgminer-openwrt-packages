@@ -1,0 +1,41 @@
+#!/bin/sh
+# This file is for cron job
+
+# Make sure there is only one cgminer running
+C=`pidof cgminer | wc -w`
+if [ "$C" != "1" ]; then
+    killall -s 9 cgminer
+    sleep 1
+    /etc/init.d/cgminer restart
+    exit 0;
+fi
+
+# Make sure the devices staill active
+B=`cgminer-api devs | grep "^   \[Last Valid Work\]"`
+if [ "$?" != "0" ]; then
+    killall -s 9 cgminer
+    sleep 1
+    /etc/init.d/cgminer restart
+    exit 0;
+fi
+
+A=`cat /tmp/cm.log`
+echo -n "$B" > /tmp/cm.log
+if [ "$A" == "$B" ]; then
+    killall -s 9 cgminer
+    sleep 1
+    /etc/init.d/cgminer restart
+    exit 0;
+fi
+
+# If there new device added, restart cgminer
+B=`find /dev/ -name "ttyUSB*" | wc -l`
+A=`cat /tmp/usbnr.log`
+echo -n "$B" > /tmp/usbnr.log
+if [ "$A" != "$B" ]; then
+    killall -s 9 cgminer
+    sleep 1
+    /etc/init.d/cgminer restart
+    exit 0;
+fi
+
