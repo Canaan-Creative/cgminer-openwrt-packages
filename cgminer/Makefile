@@ -80,21 +80,23 @@ define Package/cgminer/install
 
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/cgminer-api	   $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/cgminer  $(1)/usr/bin
-	$(INSTALL_BIN) $(FILES_DIR)/cgminer-monitor        $(1)/usr/bin
 
 ifeq ($(CONFIG_CGMINER_AVALON1),y)
-	$(INSTALL_BIN) $(FILES_DIR)/cgminer.init           $(1)/etc/init.d/cgminer
-	$(CP)          $(FILES_DIR)/cgminer.config         $(1)/etc/config/cgminer
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer-avalon1-monitor        $(1)/usr/bin/cgminer-monitor
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon1.init           $(1)/etc/init.d/cgminer
+	$(CP)          $(FILES_DIR)/cgminer.avalon1.config         $(1)/etc/config/cgminer
 endif
 
 ifeq ($(CONFIG_CGMINER_AVALON2),y)
-	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon2.init   $(1)/etc/init.d/cgminer
-	$(CP)          $(FILES_DIR)/cgminer.avalon2.config $(1)/etc/config/cgminer
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer-avalon2-monitor        $(1)/usr/bin/cgminer-monitor
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon2.init           $(1)/etc/init.d/cgminer
+	$(CP)          $(FILES_DIR)/cgminer.avalon2.config         $(1)/etc/config/cgminer
 endif
 
 ifeq ($(CONFIG_CGMINER_AVALON4),y)
-	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon4.init   $(1)/etc/init.d/cgminer
-	$(CP)          $(FILES_DIR)/cgminer.avalon4.config $(1)/etc/config/cgminer
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer-avalon4-monitor        $(1)/usr/bin/cgminer-monitor
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon4.init           $(1)/etc/init.d/cgminer
+	$(CP)          $(FILES_DIR)/cgminer.avalon4.config         $(1)/etc/config/cgminer
 endif
 
 endef
