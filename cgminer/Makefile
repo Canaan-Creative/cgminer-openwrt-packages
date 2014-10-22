@@ -10,14 +10,23 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cgminer
 
-PKG_VERSION:=4.6.0
-PKG_REV:=06b44fcc2ed64a3e0d8288287d28176132433642
+ifeq ($(CONFIG_CGMINER_AVALON4),y)
+	PKG_VERSION:=4.6.0
+	PKG_REV:=avalon4
+else
+	PKG_VERSION:=4.6.0
+	PKG_REV:=06b44fcc2ed64a3e0d8288287d28176132433642
+endif
 
 PKG_RELEASE:=1
 PKG_INSTALL:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_REV).tar.bz2
-PKG_SOURCE_URL:=git://github.com/ckolivas/cgminer.git
+ifeq ($(CONFIG_CGMINER_AVALON4),y)
+	PKG_SOURCE_URL:=git://github.com/Canaan-Creative/cgminer.git
+else
+	PKG_SOURCE_URL:=git://github.com/ckolivas/cgminer.git
+endif
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=$(PKG_REV)
@@ -80,21 +89,23 @@ define Package/cgminer/install
 
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/cgminer-api	   $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/cgminer  $(1)/usr/bin
-	$(INSTALL_BIN) $(FILES_DIR)/cgminer-monitor        $(1)/usr/bin
 
 ifeq ($(CONFIG_CGMINER_AVALON1),y)
-	$(INSTALL_BIN) $(FILES_DIR)/cgminer.init           $(1)/etc/init.d/cgminer
-	$(CP)          $(FILES_DIR)/cgminer.config         $(1)/etc/config/cgminer
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer-avalon1-monitor        $(1)/usr/bin/cgminer-monitor
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon1.init           $(1)/etc/init.d/cgminer
+	$(CP)          $(FILES_DIR)/cgminer.avalon1.config         $(1)/etc/config/cgminer
 endif
 
 ifeq ($(CONFIG_CGMINER_AVALON2),y)
-	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon2.init   $(1)/etc/init.d/cgminer
-	$(CP)          $(FILES_DIR)/cgminer.avalon2.config $(1)/etc/config/cgminer
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer-avalon2-monitor        $(1)/usr/bin/cgminer-monitor
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon2.init           $(1)/etc/init.d/cgminer
+	$(CP)          $(FILES_DIR)/cgminer.avalon2.config         $(1)/etc/config/cgminer
 endif
 
 ifeq ($(CONFIG_CGMINER_AVALON4),y)
-	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon4.init   $(1)/etc/init.d/cgminer
-	$(CP)          $(FILES_DIR)/cgminer.avalon4.config $(1)/etc/config/cgminer
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer-avalon4-monitor        $(1)/usr/bin/cgminer-monitor
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon4.init           $(1)/etc/init.d/cgminer
+	$(CP)          $(FILES_DIR)/cgminer.avalon4.config         $(1)/etc/config/cgminer
 endif
 
 endef
