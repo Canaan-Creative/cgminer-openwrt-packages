@@ -41,7 +41,7 @@ CONFIG_PACKAGE_luci-theme-openwrt=y
 # Apps
 #
 CONFIG_PACKAGE_cgminer=y
-CONFIG_CGMINER_AVALON2=y
+CONFIG_CGMINER_AVALON4=y
 
 CONFIG_PACKAGE_libncurses=y
 
