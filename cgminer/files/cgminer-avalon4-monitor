@@ -27,15 +27,3 @@ if [ "$A" == "$B" ]; then
     /etc/init.d/cgminer restart
     exit 0;
 fi
-
-# If there new device added, restart cgminer
-B=`find /dev/ -name "ttyUSB*" | wc -l`
-A=`cat /tmp/usbnr.log`
-echo -n "$B" > /tmp/usbnr.log
-if [ "$A" != "$B" ]; then
-    killall -s 9 cgminer
-    sleep 1
-    /etc/init.d/cgminer restart
-    exit 0;
-fi
-

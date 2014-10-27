@@ -61,7 +61,7 @@ start() {
 	fi
 
 	DEVS=`find /dev/ -type c -name "ttyUSB*"  | sed 's/^/-S/' |  sed ':a;N;$!ba;s/\n/ /g'`
-	AVA2_OPTIONS=" --lowmem --avalon2-fan $_fan --avalon2-freq $_cf --avalon2-voltage $_cv "
+	AVA2_OPTIONS=" --lowmem --avalon4-fan $_fan --avalon4-freq $_cf --avalon4-voltage $_cv "
 	PARAMS=" ${DEVS} $AVA2_OPTIONS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen $_mo "
 
 	NTP_POOL="-p 0.openwrt.pool.ntp.org -p 1.openwrt.pool.ntp.org  -p 3.openwrt.pool.ntp.org -p 4.openwrt.pool.ntp.org"
