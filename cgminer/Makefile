@@ -11,7 +11,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=cgminer
 
 ifeq ($(CONFIG_CGMINER_AVALON4),y)
-	PKG_VERSION:=4.6.0
+	PKG_VERSION:=4.7.0
 	PKG_REV:=avalon4
 else
 	PKG_VERSION:=4.6.0
