@@ -69,7 +69,7 @@ ifeq ($(CONFIG_CGMINER_AVALON2),y)
 	CONFIGURE_ARGS += --enable-avalon2
 endif
 ifeq ($(CONFIG_CGMINER_AVALON4),y)
-	CONFIGURE_ARGS += --enable-avalon2
+	CONFIGURE_ARGS += --enable-avalon4
 endif
 
 ifeq ($(CONFIG_TARGET_brcm2708_RaspberryPi),)
