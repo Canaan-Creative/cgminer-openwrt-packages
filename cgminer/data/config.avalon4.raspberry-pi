@@ -9,9 +9,6 @@ CONFIG_TARGET_brcm2708_RaspberryPi=y
 # Kernel
 #
 CONFIG_PACKAGE_kmod-lib-crc-ccitt=y
-CONFIG_PACKAGE_kmod-usb-serial=y
-CONFIG_PACKAGE_kmod-usb-serial-ftdi=y
-CONFIG_PACKAGE_kmod-usb-serial-pl2303=y
 
 #
 # Rootfs
