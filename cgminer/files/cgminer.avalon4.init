@@ -87,11 +87,11 @@ start() {
                 udevd --daemon
         fi
 
-	sleep 4
+	sleep 2
 	start-stop-daemon -S -x $APP -p $PID_FILE -m -b -- $PARAMS
 }
 
 stop() {
 	start-stop-daemon -K -n $APP -p $PID_FILE -s TERM
-	sleep 4
+	sleep 2
 }
