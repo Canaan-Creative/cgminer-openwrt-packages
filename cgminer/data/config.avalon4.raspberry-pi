@@ -32,6 +32,7 @@ CONFIG_BUSYBOX_CONFIG_FEATURE_REVERSE_SEARCH=y
 # Luci
 #
 CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-mod-rpc=y
 CONFIG_PACKAGE_luci-theme-openwrt=y
 CONFIG_PACKAGE_luci-theme-avalon=y
 CONFIG_PACKAGE_luci-app-cgminer=y

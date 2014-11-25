@@ -26,6 +26,7 @@ CONFIG_SDK=y
 # CONFIG_PACKAGE_ppp is not set
 # CONFIG_PACKAGE_ppp-mod-pppoe is not set
 CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-mod-rpc=y
 CONFIG_PACKAGE_luci-theme-openwrt=y
 CONFIG_PACKAGE_luci-app-cgminer=y
 
