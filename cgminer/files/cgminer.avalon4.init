@@ -64,9 +64,9 @@ start() {
 	fi
 
 	if [ "$_mmode" == " " ]; then
-		AVA4_OPTIONS=" --lowmem --avalon4-fan $_fan --avalon4-freq $_cf --avalon4-voltage $_cv $_mmode $_va"
+		AVA4_OPTIONS=" --lowmem --avalon4-fan $_fan-100 --avalon4-freq $_cf --avalon4-voltage $_cv $_mmode $_va"
 	else
-		AVA4_OPTIONS=" --lowmem --avalon4-fan $_fan $_mmode $_va"
+		AVA4_OPTIONS=" --lowmem --avalon4-fan $_fan-100 $_mmode $_va"
 	fi
 	PARAMS=" $AVA4_OPTIONS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen $_mo "
 
