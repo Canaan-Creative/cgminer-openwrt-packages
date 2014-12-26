@@ -1,4 +1,4 @@
 {
-"chip_frequency" : "445:385:370",
-"chip_voltage" : "8125"
+"avalon4-freq" : "445:385:370",
+"avalon4-voltage" : "8125"
 }
