@@ -63,7 +63,7 @@ start() {
 	    POOL3="-o $_pool3url -O $_pool3user:$_pool3pw"
 	fi
 
-	if [ "$_mmode" == " " ]; then
+	if [ "$_mmode" == "" -o "$_mmode" == " " ]; then
 		AVA4_OPTIONS=" --lowmem --avalon4-fan $_fan-100 --avalon4-freq $_cf --avalon4-voltage $_cv $_mmode $_va"
 	else
 		AVA4_OPTIONS=" --lowmem --avalon4-fan $_fan-100 $_mmode $_va"
