@@ -8,6 +8,9 @@ echo -e '\toption init cgminer' >> /etc/config/ucitrack
 # Enable the cgminer service
 /etc/init.d/cgminer enable
 
+# Disable ntp service (Run once when start cgminer)
+/etc/init.d/sysntpd disable
+
 # Setup the cron job
 echo "*/5 *  *   *   *     /usr/bin/cgminer-monitor" | crontab -
 /etc/init.d/cron enable
