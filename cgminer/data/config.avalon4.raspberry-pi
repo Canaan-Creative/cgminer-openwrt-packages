@@ -56,3 +56,9 @@ CONFIG_PACKAGE_python-mini=y
 
 CONFIG_PACKAGE_fpgatools=m
 CONFIG_PACKAGE_xc3sprog=m
+
+#
+# I2C
+#
+CONFIG_PACKAGE_kmod-i2c-bcm2708=y
+CONFIG_PACKAGE_kmod-i2c-core=y
