@@ -11,7 +11,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=cgminer
 
 ifeq ($(CONFIG_CGMINER_AVALON4),y)
-	PKG_VERSION:=4.9.0
+	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer avalon4 | cut -f1 | cut -c1-7)
 	PKG_REV:=avalon4
 else
 	PKG_VERSION:=4.6.0
