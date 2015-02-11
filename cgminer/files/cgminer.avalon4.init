@@ -63,11 +63,7 @@ start() {
 	    POOL3="-o $_pool3url -O $_pool3user:$_pool3pw"
 	fi
 
-	if [ "$_mmode" == "" -o "$_mmode" == " " ]; then
-		AVA4_OPTIONS=" --lowmem --avalon4-fan $_fan-100 --avalon4-freq $_cf --avalon4-voltage $_cv $_mmode $_va"
-	else
-		AVA4_OPTIONS=" --lowmem --avalon4-fan $_fan-100 $_mmode $_va"
-	fi
+	AVA4_OPTIONS=" --lowmem --avalon4-fan $_fan-100 --avalon4-freq $_cf --avalon4-voltage $_cv $_mmode $_va"
 	PARAMS=" $AVA4_OPTIONS $POOL1 $POOL2 $POOL3 $_pb --api-allow $_aa --api-listen $_mo "
 
 	NTP_POOL="-p 0.openwrt.pool.ntp.org -p 1.openwrt.pool.ntp.org  -p 3.openwrt.pool.ntp.org -p 4.openwrt.pool.ntp.org"
