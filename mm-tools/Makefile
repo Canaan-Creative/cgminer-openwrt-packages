@@ -19,9 +19,12 @@ PKG_SOURCE_PROTO:=git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_VERSION:=$(PKG_REV)
 
-include $(INCLUDE_DIR)/package.mk
+PKG_FIXUP:=autoreconf
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)/$(PKG_NAME)
+PKG_UNPACK_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
-MAKE_PATH:=$(PKG_NAME)
+include $(INCLUDE_DIR)/package.mk
+PKG_UNPACK := $(SH_FUNC) $(call UNPACK_CMD,$(PKG_UNPACK_DIR)) $(call CRLF_CMD,         $(PKG_UNPACK_DIR))
 
 define Package/mm-tools/Default
 	MAINTAINER:="Mikeqin" <Fengling.Qin@gmail.com>
@@ -29,7 +32,7 @@ define Package/mm-tools/Default
 	CATEGORY:=Utilities
 	TITLE:=mm-tools
 	URL:=https://github.com/Creative-Canaan/Avalon-extras.git
-	DEPENDS:=
+	DEPENDS:=+libusb +jansson +pthread +udev
 endef
 
 define Package/mm-tools/description
@@ -47,7 +50,7 @@ endef
 
 define Package/mm-tools/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	cp $(PKG_BUILD_DIR)/$(MAKE_PATH)/$(PKG_NAME) $(1)/usr/bin
+	cp $(PKG_BUILD_DIR)/$(PKG_NAME) $(1)/usr/bin
 endef
 
 $(eval $(call BuildPackage,mm-tools))
