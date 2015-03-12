@@ -109,6 +109,7 @@ ifeq ($(CONFIG_CGMINER_AVALON4),y)
 	$(CP)          $(FILES_DIR)/cgminer.avalon4.eco            $(1)/etc/config/a4.eco
 	$(CP)          $(FILES_DIR)/cgminer.avalon4.normal         $(1)/etc/config/a4.normal
 	$(CP)          $(FILES_DIR)/cgminer.avalon4.turbo          $(1)/etc/config/a4.turbo
+	$(CP)          $(FILES_DIR)/mm-avalon4-upgrade             $(1)/usr/bin/mmupgrade
 endif
 
 endef
