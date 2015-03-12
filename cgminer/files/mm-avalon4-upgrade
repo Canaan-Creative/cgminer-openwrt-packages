@@ -5,6 +5,7 @@ cd /tmp
 if [ ! -f "$FIRMWARE" ]; then
         wget http://downloads.canaan-creative.com/software/avalon4/mm41/latest/mm.mcs -O ./$FIRMWARE
 fi
+/etc/init.d/cron stop
 /etc/init.d/cgminer stop
 # wait cgminer stop finish
 sleep 2
@@ -12,3 +13,4 @@ mm-tools
 # wait mm reboot
 sleep 4
 /etc/init.d/cgminer start
+/etc/init.d/cron start
