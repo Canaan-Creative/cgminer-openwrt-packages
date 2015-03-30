@@ -106,9 +106,6 @@ ifeq ($(CONFIG_CGMINER_AVALON4),y)
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer-avalon4-monitor        $(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon4.init           $(1)/etc/init.d/cgminer
 	$(CP)          $(FILES_DIR)/cgminer.avalon4.config         $(1)/etc/config/cgminer
-	$(CP)          $(FILES_DIR)/cgminer.avalon4.eco            $(1)/etc/config/a4.eco
-	$(CP)          $(FILES_DIR)/cgminer.avalon4.normal         $(1)/etc/config/a4.normal
-	$(CP)          $(FILES_DIR)/cgminer.avalon4.turbo          $(1)/etc/config/a4.turbo
 	$(INSTALL_BIN)          $(FILES_DIR)/mm-avalon4-upgrade             $(1)/usr/bin/mmupgrade
 endif
 
