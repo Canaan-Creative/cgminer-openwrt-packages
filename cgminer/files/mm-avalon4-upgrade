@@ -11,6 +11,6 @@ fi
 sleep 2
 mm-tools
 # wait mm reboot
-sleep 4
+sleep 25
 /etc/init.d/cgminer start
 /etc/init.d/cron start
