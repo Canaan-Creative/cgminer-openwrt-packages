@@ -7,3 +7,5 @@ config CGMINER_AVALON2
 config CGMINER_AVALON4
 	bool "Enable Avalon4(A3222) support"
 	default y
+config CGMINER_AVALON6
+	bool "Enable Avalon6(A3218) support"
