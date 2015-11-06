@@ -19,7 +19,7 @@ else
 endif
 ifeq ($(CONFIG_CGMINER_AVALON6),y)
 	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer avalon4 | cut -f1 | cut -c1-7)
-	PKG_REV:=avalon6
+	PKG_REV:=avalon4
 endif
 
 PKG_RELEASE:=1
