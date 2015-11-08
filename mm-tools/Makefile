@@ -32,7 +32,7 @@ define Package/mm-tools/Default
 	CATEGORY:=Utilities
 	TITLE:=mm-tools
 	URL:=https://github.com/Creative-Canaan/Avalon-extras.git
-	DEPENDS:=+pthread +udev
+	DEPENDS:=+libpthread +udev
 endef
 
 define Package/mm-tools/description
