@@ -12,19 +12,19 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=cgminer
 
 ifeq ($(CONFIG_CGMINER_AVALON4),y)
-	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer avalon4 | cut -f1 | cut -c1-7)
-	PKG_REV:=avalon4
+	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer cgminer.xnsub | cut -f1 | cut -c1-7)
+	PKG_REV:=cgminer.xnsub
 else
 	PKG_VERSION:=4.6.0
 	PKG_REV:=06b44fcc2ed64a3e0d8288287d28176132433642
 endif
 ifeq ($(CONFIG_CGMINER_AVALON6),y)
-	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer avalon4 | cut -f1 | cut -c1-7)
-	PKG_REV:=avalon4
+	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer cgminer.xnsub | cut -f1 | cut -c1-7)
+	PKG_REV:=cgminer.xnsub
 endif
 ifeq ($(CONFIG_CGMINER_AVALON7),y)
-	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer master | cut -f1 | cut -c1-7)
-	PKG_REV:=master
+	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer cgminer.xnsub | cut -f1 | cut -c1-7)
+	PKG_REV:=cgminer.xnsub
 endif
 
 PKG_RELEASE:=1
