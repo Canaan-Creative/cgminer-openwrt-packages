@@ -53,3 +53,8 @@ CONFIG_PACKAGE_kmod-fs-ext4=y
 # disc
 #
 CONFIG_PACKAGE_fdisk=y
+
+#
+# Utils
+#
+CONFIG_PACKAGE_bitcoind=y
