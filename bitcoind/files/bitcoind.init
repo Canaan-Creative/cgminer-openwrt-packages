@@ -1,0 +1,47 @@
+#!/bin/sh /etc/rc.common
+START=99
+
+APP=bitcoind
+PID_FILE=/var/run/$APP.pid
+
+
+start() {
+    local _rpcuser
+    local _rpcpassword
+    local _rpcthreads
+    local _rpcallowip
+    
+    local _datadir
+    local _txindex
+
+    local _limitdownloadblocks
+    local _maxconnections
+    local _outboundconnections
+
+    config_load bitcoind
+
+    config_get _rpcuser default rpcuser
+    config_get _rpcpassword default rpcpassword
+    config_get _rpcthreads default rpcthreads 
+    config_get _rpcallowip default rpcallowip
+
+    config_get _datadir default datadir
+    config_get _txindex default txindex
+
+    config_get _limitdownloadblocks default limitdownloadblocks
+    config_get _maxconnections default maxconnections
+    config_get _outboundconnections default outboundconnections
+
+    OPT="-datadir=$_datadir -txindex=$_txindex"
+    CNNT="-limitdownloadblocks=$_limitdownloadblocks -maxconnections=$_maxconnections -outboundconnections=$_outboundconnections"
+    RPC="-rpcuser=$_rpcuser -rpcpassword=$_rpcpassword -rpcthreads=$_rpcthreads -rpcallowip=$_rpcallowip"
+    PARAMS="$OPT $CNNT $RPC"
+
+    #start-stop-daemon -S -x $APP -p $PID_FILE -m -b -- $PARAMS
+    # Use default configure file to start up
+    start-stop-daemon -S -x $APP -p $PID_FILE -m -b 
+}
+
+stop() {
+    start-stop-daemon -K -n $APP -p $PID_FILE -s TERM
+}

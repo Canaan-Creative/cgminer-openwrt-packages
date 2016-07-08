@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# Make sure there is only one bitcoind running
+A=`pidof bitcoind | wc -w`
+if [ "$A" != "1" ]; then
+    killall -s 9 bitcoind
+    sleep 1
+    /etc/init.d/bitcoind restart
+    exit 0;
+fi
+

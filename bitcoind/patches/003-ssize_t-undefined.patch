@@ -1,0 +1,24 @@
+From 2377ffbac066b0094cdaf5372cd1ce3d7ea93db8 Mon Sep 17 00:00:00 2001
+From: Jimmy Situ <web@jimmystone.cn>
+Date: Sun, 12 Apr 2015 20:36:12 +0800
+Subject: [PATCH 2/2] ssize_t undefined
+
+---
+ src/leveldb/db/db_iter.cc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/leveldb/db/db_iter.cc b/src/leveldb/db/db_iter.cc
+index 3b2035e..d0c9aa2 100644
+--- a/src/leveldb/db/db_iter.cc
++++ b/src/leveldb/db/db_iter.cc
+@@ -13,6 +13,7 @@
+ #include "util/logging.h"
+ #include "util/mutexlock.h"
+ #include "util/random.h"
++#include <sys/types.h>
+ 
+ namespace leveldb {
+ 
+-- 
+1.9.1
+

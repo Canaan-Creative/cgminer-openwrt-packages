@@ -1,0 +1,3 @@
+config BITCOIND
+	bool "Enable Bitcoind support"
+	default y 

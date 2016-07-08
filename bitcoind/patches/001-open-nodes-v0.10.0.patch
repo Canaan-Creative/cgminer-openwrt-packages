@@ -1,0 +1,145 @@
+diff -urN bitcoin-0.10.0/src/chainparams.cpp bitcoin-0.10.0_hub/src/chainparams.cpp
+--- bitcoin-0.10.0/src/chainparams.cpp	2015-02-13 16:55:11.000000000 +0800
++++ bitcoin-0.10.0_hub/src/chainparams.cpp	2015-02-28 14:35:51.000000000 +0800
+@@ -156,6 +156,7 @@
+         vSeeds.push_back(CDNSSeedData("bluematt.me", "dnsseed.bluematt.me"));
+         vSeeds.push_back(CDNSSeedData("dashjr.org", "dnsseed.bitcoin.dashjr.org"));
+         vSeeds.push_back(CDNSSeedData("bitcoinstats.com", "seed.bitcoinstats.com"));
++        vSeeds.push_back(CDNSSeedData("open-nodes.org", "seeds.bitcoin.open-nodes.org"));
+         vSeeds.push_back(CDNSSeedData("xf2.org", "bitseed.xf2.org"));
+ 
+         base58Prefixes[PUBKEY_ADDRESS] = list_of(0);
+diff -urN bitcoin-0.10.0/src/clientversion.cpp bitcoin-0.10.0_hub/src/clientversion.cpp
+--- bitcoin-0.10.0/src/clientversion.cpp	2015-02-13 16:55:11.000000000 +0800
++++ bitcoin-0.10.0_hub/src/clientversion.cpp	2015-02-28 14:35:51.000000000 +0800
+@@ -108,6 +108,6 @@
+             ss << "; " << *it;
+         ss << ")";
+     }
+-    ss << "/";
++    ss << "/" << "open-nodes.org:0.1/";
+     return ss.str();
+ }
+diff -urN bitcoin-0.10.0/src/init.cpp bitcoin-0.10.0_hub/src/init.cpp
+--- bitcoin-0.10.0/src/init.cpp	2015-02-13 16:55:11.000000000 +0800
++++ bitcoin-0.10.0_hub/src/init.cpp	2015-02-28 14:35:51.000000000 +0800
+@@ -287,6 +287,8 @@
+     strUsage += "  -proxy=<ip:port>       " + _("Connect through SOCKS5 proxy") + "\n";
+     strUsage += "  -seednode=<ip>         " + _("Connect to a node to retrieve peer addresses, and disconnect") + "\n";
+     strUsage += "  -timeout=<n>           " + strprintf(_("Specify connection timeout in milliseconds (minimum: 1, default: %d)"), DEFAULT_CONNECT_TIMEOUT) + "\n";
++    strUsage += "  -limitdownloadblocks=<n> " + _("Limit download blocks number from this node's height (default: INT32_MAX)") + "\n";
++    strUsage += "  -outboundconnections=<n> " + _("Max outbound connections, should <= -maxconnections (default: 8)") + "\n";
+ #ifdef USE_UPNP
+ #if USE_UPNP
+     strUsage += "  -upnp                  " + _("Use UPnP to map the listening port (default: 1 when listening)") + "\n";
+@@ -625,10 +627,15 @@
+             LogPrintf("AppInit2 : parameter interaction: -zapwallettxes=<mode> -> setting -rescan=1\n");
+     }
+ 
++    // nLimitDownloadBlocks
++    nLimitDownloadBlocks = GetArg("-limitdownloadblocks", 2147483647);
++
+     // Make sure enough file descriptors are available
+     int nBind = std::max((int)mapArgs.count("-bind") + (int)mapArgs.count("-whitebind"), 1);
+     nMaxConnections = GetArg("-maxconnections", 125);
+     nMaxConnections = std::max(std::min(nMaxConnections, (int)(FD_SETSIZE - nBind - MIN_CORE_FILEDESCRIPTORS)), 0);
++    nMaxOutboundConnections = GetArg("-outboundconnections", 8);
++    nMaxOutboundConnections = std::min(nMaxConnections, nMaxOutboundConnections);
+     int nFD = RaiseFileDescriptorLimit(nMaxConnections + MIN_CORE_FILEDESCRIPTORS);
+     if (nFD < MIN_CORE_FILEDESCRIPTORS)
+         return InitError(_("Not enough file descriptors available."));
+diff -urN bitcoin-0.10.0/src/main.cpp bitcoin-0.10.0_hub/src/main.cpp
+--- bitcoin-0.10.0/src/main.cpp	2015-02-13 16:55:11.000000000 +0800
++++ bitcoin-0.10.0_hub/src/main.cpp	2015-02-28 14:35:51.000000000 +0800
+@@ -52,6 +52,7 @@
+ bool fTxIndex = false;
+ bool fIsBareMultisigStd = true;
+ unsigned int nCoinCacheSize = 5000;
++int32_t nLimitDownloadBlocks = 2147483647;
+ 
+ 
+ /** Fees smaller than this (in satoshi) are considered zero fee (for relaying and mining) */
+@@ -3734,6 +3735,14 @@
+             pindex = chainActive.Next(pindex);
+         int nLimit = 500;
+         LogPrint("net", "getblocks %d to %s limit %d from peer=%d\n", (pindex ? pindex->nHeight : -1), hashStop==uint256(0) ? "end" : hashStop.ToString(), nLimit, pfrom->id);
++
++        int nBestHeight = (int)chainActive.Height();
++        if (pindex && nBestHeight > nLimitDownloadBlocks && pindex->nHeight < nBestHeight - nLimitDownloadBlocks) {
++            pfrom->fDisconnect = true;
++            return error("getblocks error : too old block, request height: %d, should more than %d",
++                         pindex->nHeight, nBestHeight - nLimitDownloadBlocks);
++        }
++
+         for (; pindex; pindex = chainActive.Next(pindex))
+         {
+             if (pindex->GetBlockHash() == hashStop)
+diff -urN bitcoin-0.10.0/src/main.h bitcoin-0.10.0_hub/src/main.h
+--- bitcoin-0.10.0/src/main.h	2015-02-13 16:55:11.000000000 +0800
++++ bitcoin-0.10.0_hub/src/main.h	2015-02-28 14:34:59.000000000 +0800
+@@ -127,6 +127,7 @@
+ extern bool fTxIndex;
+ extern bool fIsBareMultisigStd;
+ extern unsigned int nCoinCacheSize;
++extern int32_t nLimitDownloadBlocks;
+ extern CFeeRate minRelayTxFee;
+ 
+ /** Best header we've seen so far (used for getheaders queries' starting points). */
+diff -urN bitcoin-0.10.0/src/net.cpp bitcoin-0.10.0_hub/src/net.cpp
+--- bitcoin-0.10.0/src/net.cpp	2015-02-13 16:55:11.000000000 +0800
++++ bitcoin-0.10.0_hub/src/net.cpp	2015-02-28 14:35:51.000000000 +0800
+@@ -53,8 +53,6 @@
+ using namespace std;
+ 
+ namespace {
+-    const int MAX_OUTBOUND_CONNECTIONS = 8;
+-
+     struct ListenSocket {
+         SOCKET socket;
+         bool whitelisted;
+@@ -78,6 +76,7 @@
+ static std::vector<ListenSocket> vhListenSocket;
+ CAddrMan addrman;
+ int nMaxConnections = 125;
++int nMaxOutboundConnections = 8;
+ bool fAddressesInitialized = false;
+ 
+ vector<CNode*> vNodes;
+@@ -866,7 +865,7 @@
+                     if (nErr != WSAEWOULDBLOCK)
+                         LogPrintf("socket error accept failed: %s\n", NetworkErrorString(nErr));
+                 }
+-                else if (nInbound >= nMaxConnections - MAX_OUTBOUND_CONNECTIONS)
++                else if (nMaxConnections > nMaxOutboundConnections && nInbound >= nMaxConnections - nMaxOutboundConnections)
+                 {
+                     CloseSocket(hSocket);
+                 }
+@@ -1625,7 +1624,7 @@
+ 
+     if (semOutbound == NULL) {
+         // initialize semaphore
+-        int nMaxOutbound = min(MAX_OUTBOUND_CONNECTIONS, nMaxConnections);
++        int nMaxOutbound = min(nMaxOutboundConnections, nMaxConnections);
+         semOutbound = new CSemaphore(nMaxOutbound);
+     }
+ 
+@@ -1667,7 +1666,7 @@
+     LogPrintf("StopNode()\n");
+     MapPort(false);
+     if (semOutbound)
+-        for (int i=0; i<MAX_OUTBOUND_CONNECTIONS; i++)
++        for (int i=0; i<nMaxOutboundConnections; i++)
+             semOutbound->post();
+ 
+     if (fAddressesInitialized)
+diff -urN bitcoin-0.10.0/src/net.h bitcoin-0.10.0_hub/src/net.h
+--- bitcoin-0.10.0/src/net.h	2015-02-13 16:55:11.000000000 +0800
++++ bitcoin-0.10.0_hub/src/net.h	2015-02-28 14:34:34.000000000 +0800
+@@ -124,6 +124,7 @@
+ extern uint64_t nLocalHostNonce;
+ extern CAddrMan addrman;
+ extern int nMaxConnections;
++extern int nMaxOutboundConnections;
+ 
+ extern std::vector<CNode*> vNodes;
+ extern CCriticalSection cs_vNodes;

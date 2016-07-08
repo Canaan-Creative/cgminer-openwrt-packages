@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Hook the bitcoind Configuration + /etc/init.d/bitcoind restart
+echo '' >> /etc/config/ucitrack
+echo 'config bitcoind' >> /etc/config/ucitrack
+echo -e '\toption init bitcoind' >> /etc/config/ucitrack
+
+# Enable the bitcoind service
+/etc/init.d/bitcoind enable
+
+# Setup the cron job
+echo "*/5 *   *   *   *     /usr/bin/bitcoind-monitor" | crontab -
+/etc/init.d/cron enable
+/etc/init.d/cron stop
+/etc/init.d/cron start
