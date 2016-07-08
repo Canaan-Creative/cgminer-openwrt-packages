@@ -38,7 +38,7 @@ define Package/$(PKG_NAME)
 	URL:=https://github.com/bitcoin/bitcoin
 	DEPENDS := +libcurl +libpthread +jansson +udev +libncurses 
 	DEPENDS += +boost-chrono +boost-filesystem +boost-program_options +boost-thread +boost-test
-	DEPENDS += +libopenssl +libstdcpp +libevent2
+	DEPENDS += +libopenssl +libstdcpp +libevent2 +libevent2-pthreads
 endef
 
 define Package/$(PKG_NAME)/description
