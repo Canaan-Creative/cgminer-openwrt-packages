@@ -11,7 +11,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=bitcoind
 
 ifeq ($(CONFIG_BITCOIND),y)
-	PKG_VERSION:=v0.10.0
+	PKG_VERSION:=v0.12
 	PKG_REV:=080457c4ee97e38aa8e59de89bf3d78d1de142aa
 endif
 
@@ -38,7 +38,7 @@ define Package/$(PKG_NAME)
 	URL:=https://github.com/bitcoin/bitcoin
 	DEPENDS := +libcurl +libpthread +jansson +udev +libncurses 
 	DEPENDS += +boost-chrono +boost-filesystem +boost-program_options +boost-thread +boost-test
-	DEPENDS += +libopenssl +libstdcpp
+	DEPENDS += +libopenssl +libstdcpp +libevent2
 endef
 
 define Package/$(PKG_NAME)/description
