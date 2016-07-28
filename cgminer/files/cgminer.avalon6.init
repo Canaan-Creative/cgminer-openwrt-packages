@@ -79,9 +79,9 @@ start() {
 	fi
 
         # Make sure udevd run before cgminer start
-        [ ! -d /run ] && mkdir -p /run
         UDEVDCNT=`pidof udevd | wc -w`
         if [ "$UDEVDCNT" == "0" ]; then
+                mkdir -p /run
                 udevd --daemon
         fi
 
