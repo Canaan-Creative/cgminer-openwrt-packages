@@ -1,5 +1,6 @@
 #
 # Author: Xiangfu Liu <xiangfu@openmobilefree.net>
+#         Mikeqin <Fengling.Qin@gmail.com>
 # Address: 12h6gdGnThW385JaX1LRMA8cXKmbYRTP8Q
 #
 # This is free and unencumbered software released into the public domain.
@@ -21,6 +22,10 @@ ifeq ($(CONFIG_CGMINER_AVALON6),y)
 	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer avalon4 | cut -f1 | cut -c1-7)
 	PKG_REV:=avalon4
 endif
+ifeq ($(CONFIG_CGMINER_AVALON7),y)
+	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer master | cut -f1 | cut -c1-7)
+	PKG_REV:=master
+endif
 
 PKG_RELEASE:=1
 PKG_INSTALL:=1
@@ -32,6 +37,9 @@ else
 	PKG_SOURCE_URL:=git://github.com/ckolivas/cgminer.git
 endif
 ifeq ($(CONFIG_CGMINER_AVALON6),y)
+	PKG_SOURCE_URL:=git://github.com/Canaan-Creative/cgminer.git
+endif
+ifeq ($(CONFIG_CGMINER_AVALON7),y)
 	PKG_SOURCE_URL:=git://github.com/Canaan-Creative/cgminer.git
 endif
 PKG_SOURCE_PROTO:=git
@@ -81,6 +89,9 @@ endif
 ifeq ($(CONFIG_CGMINER_AVALON6),y)
 	CONFIGURE_ARGS += --enable-avalon4
 endif
+ifeq ($(CONFIG_CGMINER_AVALON7),y)
+	CONFIGURE_ARGS += --enable-avalon7
+endif
 
 ifeq ($(CONFIG_TARGET_brcm2708_RaspberryPi),)
 	CONFIGURE_ARGS += --without-curses
@@ -123,6 +134,12 @@ ifeq ($(CONFIG_CGMINER_AVALON6),y)
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon6.init           $(1)/etc/init.d/cgminer
 	$(CP)          $(FILES_DIR)/cgminer.avalon6.config         $(1)/etc/config/cgminer
 	$(INSTALL_BIN)          $(FILES_DIR)/mm-avalon6-upgrade             $(1)/usr/bin/mmupgrade
+endif
+ifeq ($(CONFIG_CGMINER_AVALON7),y)
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer-avalon7-monitor        $(1)/usr/bin/cgminer-monitor
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon7.init           $(1)/etc/init.d/cgminer
+	$(CP)          $(FILES_DIR)/cgminer.avalon7.config         $(1)/etc/config/cgminer
+	$(INSTALL_BIN)          $(FILES_DIR)/mm-avalon7-upgrade             $(1)/usr/bin/mmupgrade
 endif
 endef
 
