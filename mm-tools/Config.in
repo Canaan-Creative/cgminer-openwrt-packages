@@ -1,0 +1,3 @@
+config MM_TOOLS_SOFT_CRC
+	bool "Enable soft crc algorithm"
+	default n
