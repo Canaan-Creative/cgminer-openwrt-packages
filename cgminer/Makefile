@@ -90,7 +90,7 @@ ifeq ($(CONFIG_CGMINER_AVALON6),y)
 	CONFIGURE_ARGS += --enable-avalon4
 endif
 ifeq ($(CONFIG_CGMINER_AVALON7),y)
-	CONFIGURE_ARGS += --enable-avalon7
+	CONFIGURE_ARGS += --enable-avalon7 CFLAGS=-DSTRATUM_USER_AGENT=\\\"a7\\\"
 endif
 
 ifeq ($(CONFIG_TARGET_brcm2708_RaspberryPi),)
