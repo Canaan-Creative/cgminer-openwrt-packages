@@ -3,7 +3,7 @@
 FIRMWARE=mm.mcs
 cd /tmp
 if [ ! -f "$FIRMWARE" ]; then
-        wget http://downloads.canaan-creative.com/software/avalon7/mm/latest/mm.mcs -O ./$FIRMWARE
+        exit
 fi
 /etc/init.d/cron stop
 /etc/init.d/cgminer stop
