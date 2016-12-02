@@ -11,7 +11,7 @@ if [ "$C" != "1" ]; then
 fi
 
 # Make sure the devices staill active
-B=`cgminer-api devs | grep "^   \[Last Valid Work\]"`
+B=`cgminer-api devs | grep "^   \[Last Share Time\]"`
 if [ "$?" != "0" ]; then
     killall -s 9 cgminer
     sleep 1

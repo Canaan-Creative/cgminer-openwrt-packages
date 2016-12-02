@@ -12,7 +12,7 @@ echo -e '\toption init cgminer' >> /etc/config/ucitrack
 /etc/init.d/sysntpd disable
 
 # Setup the cron job
-echo "*/5 *  *   *   *     /usr/bin/cgminer-monitor" | crontab -
+echo "*/3 *  *   *   *     /usr/bin/cgminer-monitor" | crontab -
 /etc/init.d/cron enable
 /etc/init.d/cron stop
 /etc/init.d/cron start
