@@ -46,12 +46,12 @@ start() {
 	config_get _cv default chip_voltage
 	config_get _vo default voltage_offset
 	config_get _fan default fan
-        
+
 	config_get _aa default api_allow
 	config_get _pb default pool_balance
 	config_get _mo default more_options
-    	config_get _ntp_enable default ntp_enable
-        config_get _smart_speed_enable default smart_speed
+	config_get _ntp_enable default ntp_enable
+	config_get _smart_speed_enable default smart_speed
 
 	if [ "$_pool1url" != "" -a "$_pool1user" != "" -a "$_pool1pw" != "" ]; then
 	    POOL1="-o $_pool1url -O $_pool1user:$_pool1pw"
