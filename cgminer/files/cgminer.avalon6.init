@@ -22,7 +22,6 @@ start() {
 	local _fan
 
 	local _aa
-	local _pb
 	local _mo
 
 	local _ntp_enable
@@ -43,7 +42,6 @@ start() {
 	config_get _fan default fan
 
 	config_get _aa default api_allow
-	config_get _pb default pool_balance
 	config_get _mo default more_options
 
 	config_get _ntp_enable default ntp_enable
