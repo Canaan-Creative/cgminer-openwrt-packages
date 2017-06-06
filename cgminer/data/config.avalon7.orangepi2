@@ -60,3 +60,7 @@ CONFIG_OPENSSL_WITH_EC=y
 #
 CONFIG_PACKAGE_e2fsprogs=y
 
+#
+# Editor
+#
+CONFIG_PACKAGE_nano=y
