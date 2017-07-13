@@ -18,6 +18,8 @@ config 'dnsmasq'
 config 'dhcp' 'lan'
 	option 'interface' 'lan'
 	option 'ignore' '1'
+	option dhcpv6 'disabled'
+	option ra 'disabled'
 
 config 'dhcp' 'wan'
 	option 'interface' 'wan'
