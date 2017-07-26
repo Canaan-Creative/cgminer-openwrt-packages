@@ -37,9 +37,7 @@ start() {
     RPC="-rpcuser=$_rpcuser -rpcpassword=$_rpcpassword -rpcthreads=$_rpcthreads -rpcallowip=$_rpcallowip"
     PARAMS="$OPT $CNNT $RPC"
 
-    #start-stop-daemon -S -x $APP -p $PID_FILE -m -b -- $PARAMS
-    # Use default configure file to start up
-    start-stop-daemon -S -x $APP -p $PID_FILE -m -b 
+    start-stop-daemon -S -x $APP -p $PID_FILE -m -b -- $PARAMS
 }
 
 stop() {
