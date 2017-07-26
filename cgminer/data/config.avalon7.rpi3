@@ -78,3 +78,8 @@ CONFIG_PACKAGE_kmod-i2c-core=y
 # Editor
 #
 CONFIG_PACKAGE_nano=y
+
+#
+# Utils
+#
+CONFIG_PACKAGE_bitcoind=y
