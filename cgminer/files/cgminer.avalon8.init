@@ -38,8 +38,7 @@ start() {
 	config_get _pool3pw default pool3pw
 
 	config_get _cf default chip_frequency
-	config_get _cv default chip_voltage
-	config_get _vo default voltage_offset
+	config_get _vo default voltage_level_offset
 	config_get _fan default fan
 
 	config_get _aa default api_allow
@@ -58,14 +57,10 @@ start() {
 	fi
 
 	if [ "$_vo" != "" ]; then
-	    VOLT_OFFSET="--avalon8-voltage-offset $_vo"
+	    VOLT_OFFSET="--avalon8-voltage-level-offset $_vo"
 	fi
 
-	if [ "$_cv" != "" ]; then
-	    CHIP_VOLT="--avalon8-voltage $_cv"
-	fi
-
-	AVA8_OPTIONS=" --avalon8-fan $_fan-100 --avalon8-freq $_cf $CHIP_VOLT $VOLT_OFFSET $SSP"
+	AVA8_OPTIONS=" --avalon8-fan $_fan-100 --avalon8-freq $_cf $VOLT_OFFSET"
 	PARAMS=" --lowmem $AVA8_OPTIONS $POOL1 $POOL2 $POOL3 --api-allow $_aa --api-listen $_mo --real-quiet"
 
 	NTP_POOL="-p 0.openwrt.pool.ntp.org -p 1.openwrt.pool.ntp.org  -p 3.openwrt.pool.ntp.org -p 4.openwrt.pool.ntp.org"
