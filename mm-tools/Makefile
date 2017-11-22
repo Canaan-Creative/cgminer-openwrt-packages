@@ -36,7 +36,7 @@ define Package/mm-tools/Default
 endef
 
 define Package/mm-tools/description
-mm-tools is a tool to reflash MM firmware for Avalon4, 5, 6, 7.
+mm-tools is a tool to reflash MM firmware for Avalon4, 5, 6, 7, 8.
 It supports AUC and IIC interface.
 endef
 
@@ -48,11 +48,15 @@ endef
 
 define Package/mm-tools
 	$(call Package/mm-tools/Default)
-	TITLE+=(for Avalon4, 5, 6, 7)
+	TITLE+=(for Avalon4, 5, 6, 7, 8)
 endef
 
 ifeq ($(CONFIG_MM_TOOLS_SOFT_CRC),y)
 	CONFIGURE_ARGS += --enable-soft-crc
+endif
+
+ifeq ($(CONFIG_MM_TOOLS_FLASH_LAYOUT_2M),y)
+	CONFIGURE_ARGS += --enable-flash-layout-2m
 endif
 
 define Build/Install
