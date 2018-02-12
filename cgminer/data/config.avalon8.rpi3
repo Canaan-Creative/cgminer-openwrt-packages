@@ -80,3 +80,9 @@ CONFIG_PACKAGE_kmod-i2c-core=y
 # Editor
 #
 CONFIG_PACKAGE_nano=y
+
+#
+# Translations
+#
+CONFIG_LUCI_LANG_zh-cn=y
+CONFIG_LUCI_LANG_ru=y
