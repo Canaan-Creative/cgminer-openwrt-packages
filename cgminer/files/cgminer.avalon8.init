@@ -1,10 +1,11 @@
 #!/bin/sh /etc/rc.common
 START=99
 
-APP=cgminer
-PID_FILE=/var/run/$APP.pid
+USE_PROCD=1
 
-start() {
+APP=cgminer
+
+start_service() {
 	local _pool1url
 	local _pool1user
 	local _pool1pw
@@ -79,18 +80,9 @@ start() {
 	    touch /tmp/cgminer-ntpd-done
 	fi
 
-        # Make sure udevd run before cgminer start
-        UDEVDCNT=`pidof udevd | wc -w`
-        if [ "$UDEVDCNT" == "0" ]; then
-                mkdir -p /run
-                udevd --daemon
-        fi
-
 	sleep 2
-	start-stop-daemon -S -x $APP -p $PID_FILE -m -b -- $PARAMS
-}
 
-stop() {
-	start-stop-daemon -K -n $APP -p $PID_FILE -s TERM
-	sleep 2
+	procd_open_instance
+	procd_set_param command $APP $PARAMS
+	procd_close_instance
 }
