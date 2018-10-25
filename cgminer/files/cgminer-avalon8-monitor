@@ -50,4 +50,5 @@ if [ "$A" == "$B" ]; then
     exit 0;
 fi
 
+# Check whether exist network check script, if yes, trigger it. The network check script can be injected into RPi by ams server and only stays in memory(RAM), it will run less than 3 minutes every time.
 [ -x /tmp/ping_heartbeat.sh ] && /tmp/ping_heartbeat.sh &
