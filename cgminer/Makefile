@@ -34,6 +34,10 @@ ifeq ($(CONFIG_CGMINER_AVALON9),y)
 	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer avalon9 | cut -f1 | cut -c1-7)
 	PKG_REV:=avalon9
 endif
+ifeq ($(CONFIG_CGMINER_AVALON911),y)
+	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer avalon911 | cut -f1 | cut -c1-7)
+	PKG_REV:=avalon911
+endif
 
 PKG_RELEASE:=1
 PKG_INSTALL:=1
@@ -54,6 +58,9 @@ ifeq ($(CONFIG_CGMINER_AVALON8),y)
 	PKG_SOURCE_URL:=git://github.com/Canaan-Creative/cgminer.git
 endif
 ifeq ($(CONFIG_CGMINER_AVALON9),y)
+	PKG_SOURCE_URL:=git://github.com/Canaan-Creative/cgminer.git
+endif
+ifeq ($(CONFIG_CGMINER_AVALON911),y)
 	PKG_SOURCE_URL:=git://github.com/Canaan-Creative/cgminer.git
 endif
 PKG_SOURCE_PROTO:=git
@@ -112,6 +119,9 @@ endif
 ifeq ($(CONFIG_CGMINER_AVALON9),y)
 	CONFIGURE_ARGS += --enable-avalon9 CFLAGS=-DSTRATUM_USER_AGENT=\\\"a9\\\"
 endif
+ifeq ($(CONFIG_CGMINER_AVALON911),y)
+	CONFIGURE_ARGS += --enable-avalon9 CFLAGS=-DSTRATUM_USER_AGENT=\\\"a9\\\"
+endif
 
 ifeq ($(CONFIG_TARGET_brcm2708_RaspberryPi),)
 	CONFIGURE_ARGS += --without-curses
@@ -168,6 +178,12 @@ ifeq ($(CONFIG_CGMINER_AVALON8),y)
 	$(INSTALL_BIN)          $(FILES_DIR)/mm-avalon8-upgrade             $(1)/usr/bin/mmupgrade
 endif
 ifeq ($(CONFIG_CGMINER_AVALON9),y)
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer-avalon9-monitor        $(1)/usr/bin/cgminer-monitor
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon9.init           $(1)/etc/init.d/cgminer
+	$(CP)          $(FILES_DIR)/cgminer.avalon9.config         $(1)/etc/config/cgminer
+	$(INSTALL_BIN)          $(FILES_DIR)/mm-avalon9-upgrade             $(1)/usr/bin/mmupgrade
+endif
+ifeq ($(CONFIG_CGMINER_AVALON911),y)
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer-avalon9-monitor        $(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon9.init           $(1)/etc/init.d/cgminer
 	$(CP)          $(FILES_DIR)/cgminer.avalon9.config         $(1)/etc/config/cgminer
