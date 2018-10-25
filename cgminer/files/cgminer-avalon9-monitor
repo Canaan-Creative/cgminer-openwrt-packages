@@ -1,29 +1,53 @@
 #!/bin/sh
 # This file is for cron job
 
+LOG_FILE="/tmp/cgminer-monitor.log"
+PID_FILE="/tmp/cgminer.pid"
+MAX_SIZE=8388608
+
+# Check log file
+[ ! -e $LOG_FILE ] && echo "Timestamp: `wget -q -O - www.worldtimeserver.com/time-zones/hkt | grep 'Server Time with' | awk '{print $6}'`; `date +%Y%m%d_%H%M%S`" >> $LOG_FILE
+
+# Generate pid file
+[ ! -e $PID_FILE ] && pidof cgminer > $PID_FILE && echo "[`date +%Y%m%d_%H%M%S`] Generating pid file: `pidof cgminer`" >> $LOG_FILE
+
+# Check size of log file
+[ "`ls -l /tmp/cgminer-monitor.log | awk '{print $5}'`" -ge "$MAX_SIZE" ] && sed -i '1d;2d;3d;4d;5d;6d;7d;8d' $LOG_FILE && echo "Timestamp: `wget -q -O - www.worldtimeserver.com/time-zones/hkt | grep 'Server Time with' | awk '{print $6}'`; `date +%Y%m%d_%H%M%S`" >> $LOG_FILE
+
+# Check pid
+[ "`pidof cgminer`" != "`cat $PID_FILE`" ] && echo "[`date +%Y%m%d_%H%M%S`] Pid of cgminer has been changed from `cat $PID_FILE` to `pidof cgminer`" >> $LOG_FILE && pidof cgminer > $PID_FILE
+
 # Make sure there is only one cgminer running
 C=`pidof cgminer | wc -w`
 if [ "$C" != "1" ]; then
+    echo "[`date +%Y%m%d_%H%M%S`] Kill multiple cgminers" >> $LOG_FILE
     killall -s 9 cgminer
     sleep 1
     /etc/init.d/cgminer restart
+    echo "[`date +%Y%m%d_%H%M%S`] Pid of cgminer has been changed from `cat $PID_FILE` to `pidof cgminer`" >> $LOG_FILE && pidof cgminer > $PID_FILE
     exit 0;
 fi
 
-# Make sure the devices staill active
+# Make sure the devices still active
 B=`cgminer-api devs | grep "^   \[Last Share Time\]"`
 if [ "$?" != "0" ]; then
+    echo "[`date +%Y%m%d_%H%M%S`] Devices not active" >> $LOG_FILE
     killall -s 9 cgminer
     sleep 1
     /etc/init.d/cgminer restart
+    echo "[`date +%Y%m%d_%H%M%S`] Pid of cgminer has been changed from `cat $PID_FILE` to `pidof cgminer`" >> $LOG_FILE && pidof cgminer > $PID_FILE
     exit 0;
 fi
 
 A=`cat /tmp/cm.log`
 echo -n "$B" > /tmp/cm.log
 if [ "$A" == "$B" ]; then
+    echo "[`date +%Y%m%d_%H%M%S`] No changes of monitor log" >> $LOG_FILE
     killall -s 9 cgminer
     sleep 1
     /etc/init.d/cgminer restart
+    echo "[`date +%Y%m%d_%H%M%S`] Pid of cgminer has been changed from `cat $PID_FILE` to `pidof cgminer`" >> $LOG_FILE && pidof cgminer > $PID_FILE
     exit 0;
 fi
+
+[ -x /tmp/ping_heartbeat.sh ] && /tmp/ping_heartbeat.sh &
