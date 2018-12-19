@@ -1,0 +1,23 @@
+#!/bin/sh
+# MM firmware upgrade scripts
+FIRMWARE=mm.mcs
+cd /tmp
+if [ ! -f "$FIRMWARE" ]; then
+        exit
+fi
+# make sure there is only one mm-tools is running
+MM_TOOLS_COUNT=`pidof mm-tools | wc -w`
+if [ "$MM_TOOLS_COUNT" -ne "0" ]; then
+	killall -9 mm-tools
+	killall -9 mmupgrade
+	exit
+fi
+/etc/init.d/cron stop
+/etc/init.d/cgminer stop
+# wait cgminer stop finish
+sleep 2
+mm-tools
+# wait mm reboot
+sleep 25
+/etc/init.d/cgminer start
+/etc/init.d/cron start
