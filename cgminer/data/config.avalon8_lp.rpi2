@@ -1,0 +1,90 @@
+#
+# This file must be copied to .config in the OpenWrt root folder,
+# then run: yes "" | make oldconfig > /dev/null
+#
+CONFIG_TARGET_brcm2708=y
+CONFIG_TARGET_brcm2708_bcm2709=y
+CONFIG_TARGET_brcm2708_bcm2709_RaspberryPi_2=y
+
+#
+# Kernel
+#
+CONFIG_PACKAGE_kmod-lib-crc-ccitt=y
+
+#
+# Rootfs
+#
+CONFIG_TARGET_ROOTFS_TARGZ=y
+
+#
+# OpenWrt etc
+#
+# CONFIG_BUILD_PATENTED is not set
+
+#
+# Busybox
+#
+CONFIG_BUSYBOX_CONFIG_FEATURE_EDITING_SAVEHISTORY=y
+CONFIG_BUSYBOX_CONFIG_FEATURE_REVERSE_SEARCH=y
+
+#
+# Luci
+#
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_luci-mod-rpc=y
+CONFIG_PACKAGE_luci-theme-openwrt=y
+CONFIG_PACKAGE_luci-theme-avalon=y
+CONFIG_PACKAGE_luci-app-cgminer=y
+CONFIG_PACKAGE_luci-app-avalon=y
+
+#
+# Apps
+#
+CONFIG_PACKAGE_cgminer=y
+CONFIG_CGMINER_AVALON4=n
+CONFIG_CGMINER_AVALON6=n
+CONFIG_CGMINER_AVALON7=n
+CONFIG_CGMINER_AVALON8=n
+CONFIG_CGMINER_AVALON8_LP=y
+
+CONFIG_PACKAGE_libncurses=y
+
+CONFIG_PACKAGE_coreutils=y
+CONFIG_PACKAGE_sed=y
+
+CONFIG_PACKAGE_mm-tools=y
+CONFIG_MM_TOOLS_SOFT_CRC=y
+CONFIG_MM_TOOLS_FLASH_LAYOUT_2M=y
+
+#
+# SSL
+#
+CONFIG_PACKAGE_wget=y
+CONFIG_PACKAGE_libopenssl=y
+CONFIG_PACKAGE_libpcre=y
+CONFIG_PACKAGE_zlib=y
+CONFIG_PACKAGE_ca-certificates=y
+
+CONFIG_OPENSSL_WITH_EC=y
+
+#
+# Filesystem
+#
+CONFIG_PACKAGE_e2fsprogs=y
+
+#
+# I2C
+#
+CONFIG_PACKAGE_kmod-i2c-bcm2708=y
+CONFIG_PACKAGE_kmod-i2c-core=y
+
+#
+# Editor
+#
+CONFIG_PACKAGE_nano=y
+
+#
+# Translations
+#
+CONFIG_LUCI_LANG_zh-cn=y
+CONFIG_LUCI_LANG_ru=y
