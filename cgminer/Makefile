@@ -29,6 +29,7 @@ endif
 ifeq ($(CONFIG_CGMINER_AVALON8),y)
 	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer avalon8 | cut -f1 | cut -c1-7)
 	PKG_REV:=avalon8
+endif
 ifeq ($(CONFIG_CGMINER_AVALON8_LP),y)
 	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer avalon8_lp | cut -f1 | cut -c1-7)
 	PKG_REV:=avalon8_lp
@@ -130,7 +131,7 @@ ifeq ($(CONFIG_CGMINER_AVALON8),y)
 	CONFIGURE_ARGS += --enable-avalon8 CFLAGS=-DSTRATUM_USER_AGENT=\\\"a8\\\"
 endif
 ifeq ($(CONFIG_CGMINER_AVALON8_LP),y)
-	CONFIGURE_ARGS += --enable-avalon8_lp CFLAGS=-DSTRATUM_USER_AGENT=\\\"a8\\\"
+	CONFIGURE_ARGS += --enable-avalon8 CFLAGS=-DSTRATUM_USER_AGENT=\\\"a8\\\"
 endif
 ifeq ($(CONFIG_CGMINER_AVALON9),y)
 	CONFIGURE_ARGS += --enable-avalon9 CFLAGS=-DSTRATUM_USER_AGENT=\\\"a9\\\"
