@@ -61,10 +61,12 @@ start() {
 	    VOLT_OFFSET="--avalon8-voltage-level-offset $_vo"
 	fi
 
-	if [ "$_power_mode" == "normal" ]; then
+	if [ "$_power_mode" == "high" ]; then
 	    POWER_MODE="--avalon8-power-mode 0"
-	elif [ "$_power_mode" == "low" ]; then
+	elif [ "$_power_mode" == "balance" ]; then
 	    POWER_MODE="--avalon8-power-mode 1"
+	elif [ "$_power_mode" == "low" ]; then
+	    POWER_MODE="--avalon8-power-mode 2"
 	fi
 
 	AVA8_OPTIONS=" --avalon8-fan $_fan-100 $VOLT_OFFSET"
