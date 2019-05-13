@@ -30,6 +30,10 @@ ifeq ($(CONFIG_CGMINER_AVALON8),y)
 	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer avalon8 | cut -f1 | cut -c1-7)
 	PKG_REV:=avalon8
 endif
+ifeq ($(CONFIG_CGMINER_AVALON850),y)
+	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer avalon850 | cut -f1 | cut -c1-7)
+	PKG_REV:=avalon850
+endif
 ifeq ($(CONFIG_CGMINER_AVALON8_LP),y)
 	PKG_VERSION:=git-$(shell git ls-remote https://github.com/Canaan-Creative/cgminer avalon8_lp | cut -f1 | cut -c1-7)
 	PKG_REV:=avalon8_lp
@@ -63,6 +67,9 @@ ifeq ($(CONFIG_CGMINER_AVALON7),y)
 	PKG_SOURCE_URL:=git://github.com/Canaan-Creative/cgminer.git
 endif
 ifeq ($(CONFIG_CGMINER_AVALON8),y)
+	PKG_SOURCE_URL:=git://github.com/Canaan-Creative/cgminer.git
+endif
+ifeq ($(CONFIG_CGMINER_AVALON850),y)
 	PKG_SOURCE_URL:=git://github.com/Canaan-Creative/cgminer.git
 endif
 ifeq ($(CONFIG_CGMINER_AVALON8_LP),y)
@@ -130,6 +137,9 @@ endif
 ifeq ($(CONFIG_CGMINER_AVALON8),y)
 	CONFIGURE_ARGS += --enable-avalon8 CFLAGS=-DSTRATUM_USER_AGENT=\\\"a8\\\"
 endif
+ifeq ($(CONFIG_CGMINER_AVALON850),y)
+	CONFIGURE_ARGS += --enable-avalon8 CFLAGS=-DSTRATUM_USER_AGENT=\\\"a8\\\"
+endif
 ifeq ($(CONFIG_CGMINER_AVALON8_LP),y)
 	CONFIGURE_ARGS += --enable-avalon8 CFLAGS=-DSTRATUM_USER_AGENT=\\\"a8\\\"
 endif
@@ -195,6 +205,12 @@ ifeq ($(CONFIG_CGMINER_AVALON8),y)
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer-avalon8-monitor        $(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon8.init           $(1)/etc/init.d/cgminer
 	$(CP)          $(FILES_DIR)/cgminer.avalon8.config         $(1)/etc/config/cgminer
+	$(INSTALL_BIN)          $(FILES_DIR)/mm-avalon8-upgrade             $(1)/usr/bin/mmupgrade
+endif
+ifeq ($(CONFIG_CGMINER_AVALON850),y)
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer-avalon8-monitor        $(1)/usr/bin/cgminer-monitor
+	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon8.init           $(1)/etc/init.d/cgminer
+	$(CP)          $(FILES_DIR)/cgminer.avalon850.config         $(1)/etc/config/cgminer
 	$(INSTALL_BIN)          $(FILES_DIR)/mm-avalon8-upgrade             $(1)/usr/bin/mmupgrade
 endif
 ifeq ($(CONFIG_CGMINER_AVALON8_LP),y)
