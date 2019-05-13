@@ -210,7 +210,7 @@ endif
 ifeq ($(CONFIG_CGMINER_AVALON850),y)
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer-avalon8-monitor        $(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN) $(FILES_DIR)/cgminer.avalon8.init           $(1)/etc/init.d/cgminer
-	$(CP)          $(FILES_DIR)/cgminer.avalon8.config         $(1)/etc/config/cgminer
+	$(CP)          $(FILES_DIR)/cgminer.avalon850.config         $(1)/etc/config/cgminer
 	$(INSTALL_BIN)          $(FILES_DIR)/mm-avalon8-upgrade             $(1)/usr/bin/mmupgrade
 endif
 ifeq ($(CONFIG_CGMINER_AVALON8_LP),y)
